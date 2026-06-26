@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Motor de Ingresos IA · Presentación</title>
+<title>Productos Desarrollados · Santa Rosa Paraguay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js"></script>
 <style>
 :root{
   --bg:#0F172A; --bg2:#0B1220; --primary:#1E293B; --secondary:#334155;
@@ -27,8 +28,6 @@ html,body{height:100%;background:#05080f;color:var(--fg);font-family:'Inter',sys
   background:linear-gradient(160deg,#0e1830 0%,#0a1124 55%,#070d1c 100%);
   border:1px solid var(--border);border-radius:18px;overflow:hidden;
   box-shadow:0 40px 120px -20px rgba(0,0,0,.8),0 0 0 1px rgba(56,189,248,.04)}
-
-/* grid + glow bg */
 .stage::before{content:"";position:absolute;inset:0;
   background-image:linear-gradient(rgba(56,189,248,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.045) 1px,transparent 1px);
   background-size:48px 48px;mask-image:radial-gradient(900px 600px at 75% 0%,#000 0%,transparent 75%);pointer-events:none}
@@ -36,15 +35,11 @@ html,body{height:100%;background:#05080f;color:var(--fg);font-family:'Inter',sys
   background:radial-gradient(circle,rgba(34,197,94,.18),transparent 65%);filter:blur(20px);pointer-events:none}
 
 /* ---------- SLIDES ---------- */
-.slide{position:absolute;inset:0;padding:54px 64px;opacity:0;visibility:hidden;
+.slide{position:absolute;inset:0;padding:48px 60px;opacity:0;visibility:hidden;
   transform:translateY(28px) scale(.985);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1),visibility .55s;
   display:flex;flex-direction:column}
 .slide.active{opacity:1;visibility:visible;transform:none}
 .slide.prev{transform:translateY(-28px) scale(.985)}
-.slide.dense{padding:38px 56px}
-.slide.dense .shead{margin-bottom:14px}
-.slide.dense h2.title{font-size:31px;margin-top:10px}
-.slide.dense .filters{margin-bottom:14px}
 
 /* reveal */
 .r{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
@@ -58,22 +53,24 @@ html,body{height:100%;background:#05080f;color:var(--fg);font-family:'Inter',sys
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
   background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);padding:6px 14px;border-radius:999px}
 .eyebrow.cy{color:var(--accent2);background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.25)}
-h2.title{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.05;margin-top:16px}
+.eyebrow.am{color:var(--amber);background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25)}
+.eyebrow.vi{color:var(--violet);background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.25)}
+h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;margin-top:14px}
 .title .hl{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.subtitle{color:var(--muted);font-size:16px;font-weight:400;margin-top:10px;max-width:760px}
-.shead{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:26px}
+.subtitle{color:var(--muted);font-size:15.5px;font-weight:400;margin-top:10px;max-width:760px;line-height:1.55}
+.shead{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px}
 
 /* ---------- HERO ---------- */
 .hero{align-items:flex-start;justify-content:center}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;width:100%;align-items:center}
-.hero h1{font-size:62px;font-weight:900;letter-spacing:-.03em;line-height:1.0;margin:18px 0 0}
+.hero h1{font-size:56px;font-weight:900;letter-spacing:-.03em;line-height:1.0;margin:18px 0 0}
 .hero h1 .hl{background:linear-gradient(90deg,#22C55E,#38BDF8 60%,#8B5CF6);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p.lead{color:var(--muted);font-size:18px;margin-top:20px;max-width:520px;line-height:1.6}
-.hero-meta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.hero p.lead{color:var(--muted);font-size:17px;margin-top:20px;max-width:520px;line-height:1.6}
+.hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
 .chip{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:12px 16px}
 .chip .k{font-size:22px;font-weight:800;color:var(--fg)}
 .chip .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-.byline{display:flex;align-items:center;gap:14px;margin-top:38px;color:var(--muted);font-size:14px}
+.byline{display:flex;align-items:center;gap:14px;margin-top:34px;color:var(--muted);font-size:14px}
 .byline .av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#22C55E,#38BDF8);display:flex;align-items:center;justify-content:center;font-weight:800;color:#04210f}
 .byline b{color:var(--fg)}
 
@@ -86,6 +83,7 @@ h2.title{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
 .ring .dot{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--accent);top:-5px;left:50%;margin-left:-5px;box-shadow:0 0 14px var(--accent)}
 .ring.r2 .dot{background:var(--accent2);box-shadow:0 0 14px var(--accent2)}
 .robot{position:relative;width:230px;animation:bob 5s ease-in-out infinite;filter:drop-shadow(0 18px 30px rgba(0,0,0,.55))}
+.robot-spline{position:relative;z-index:2;width:115%;height:115%;background:transparent}
 .eye{transform-origin:center;animation:blink 4.5s infinite}
 .antenna-dot{animation:pulseDot 1.6s ease-in-out infinite}
 .scan{animation:scan 3s ease-in-out infinite}
@@ -93,7 +91,7 @@ h2.title{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulseGlow{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
-@keyframes pulseDot{0%,100%{opacity:1;r:5}50%{opacity:.3}}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.3}}
 @keyframes blink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
 @keyframes scan{0%,100%{transform:translateY(0);opacity:.2}50%{transform:translateY(26px);opacity:.9}}
 
@@ -102,120 +100,92 @@ h2.title{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
 .kpi{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:16px;padding:22px;position:relative;overflow:hidden}
 .kpi::after{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:var(--accent)}
 .kpi.cy::after{background:var(--accent2)}.kpi.am::after{background:var(--amber)}.kpi.vi::after{background:var(--violet)}
-.kpi .v{font-size:46px;font-weight:900;letter-spacing:-.03em;line-height:1}
+.kpi .v{font-size:44px;font-weight:900;letter-spacing:-.03em;line-height:1}
 .kpi .u{font-size:20px;font-weight:700;color:var(--muted);margin-left:2px}
 .kpi .lab{margin-top:8px;color:var(--muted);font-size:13px;font-weight:500}
-.kpi .ic{position:absolute;top:18px;right:18px;opacity:.3}
 
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:26px;flex:1;min-height:0}
-.panel{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:16px;padding:22px;display:flex;flex-direction:column;min-height:0}
-.panel h3{font-size:15px;font-weight:700;color:var(--fg);margin-bottom:4px;display:flex;align-items:center;gap:8px}
-.panel .ph{font-size:12px;color:var(--muted);margin-bottom:14px}
-.chart-box{position:relative;flex:1;min-height:0}
+/* ---------- PRODUCT TILES (overview) ---------- */
+.ptiles{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;align-content:start}
+.ptile{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:14px;padding:16px 16px;display:flex;flex-direction:column;gap:9px;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .25s}
+.ptile:hover{transform:translateY(-4px);border-color:var(--secondary)}
+.ptile .ic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:rgba(56,189,248,.1);color:var(--accent2)}
+.ptile .tn{font-size:13.5px;font-weight:700;line-height:1.25}
+.ptile .td{font-size:11px;color:var(--muted);line-height:1.4;flex:1}
+.ptile .badge{align-self:flex-start}
 
-/* legend list */
-.leg{display:flex;flex-direction:column;gap:11px;margin-top:4px}
-.leg .row{display:flex;align-items:center;gap:12px;font-size:13.5px}
-.leg .sw{width:12px;height:12px;border-radius:4px;flex:none}
-.leg .nm{flex:1;color:var(--fg)}
-.leg .vl{font-weight:700;color:var(--muted)}
-
-/* ---------- PROJECT GRID ---------- */
-.filters{display:flex;gap:9px;margin-bottom:18px;flex-wrap:wrap}
-.fbtn{font-size:12.5px;font-weight:600;color:var(--muted);background:rgba(255,255,255,.03);border:1px solid var(--border);
-  padding:8px 16px;border-radius:999px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px}
-.fbtn:hover{color:var(--fg);border-color:var(--secondary)}
-.fbtn.on{color:#04210f;background:var(--accent);border-color:var(--accent)}
-.fbtn .cnt{font-size:11px;opacity:.8}
-.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;align-content:start;overflow:hidden}
-.pcard{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:13px;padding:12px 14px;display:flex;flex-direction:column;
-  transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .35s,border-color .25s;cursor:default}
-.pcard:hover{transform:translateY(-4px);border-color:var(--secondary)}
-.pcard.hide{display:none}
-.pc-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
-.pc-cat{font-size:9.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted2)}
-.badge{font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap}
+/* ---------- PRODUCT SHOWCASE ---------- */
+.prod-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:36px;flex:1;min-height:0;align-items:center}
+.prod-grid.rev{grid-template-columns:1.18fr .82fr}
+.badge{font-size:10px;font-weight:700;padding:4px 10px;border-radius:7px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 .b-done{color:var(--accent);background:rgba(34,197,94,.12)}
+.b-ready{color:var(--accent2);background:rgba(56,189,248,.12)}
 .b-prog{color:var(--amber);background:rgba(245,158,11,.12)}
-.b-none{color:var(--muted);background:rgba(148,163,184,.1)}
-.b-rec{color:var(--violet);background:rgba(139,92,246,.13)}
-.pc-name{font-size:12.5px;font-weight:700;line-height:1.2;margin-bottom:3px;min-height:30px}
-.pc-dep{font-size:10px;color:var(--muted);margin-bottom:8px}
-.pbar{height:6px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden;position:relative;margin-top:auto}
-.pbar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 1s cubic-bezier(.2,.8,.2,1)}
-.pbar i.am{background:linear-gradient(90deg,var(--amber),#fbbf24)}
-.pbar i.gr{background:linear-gradient(90deg,#22C55E,#4ade80)}
-.pc-foot{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:8px}
-.pc-pct{font-size:12.5px;font-weight:800;flex:none}
-.pc-next{font-size:9.5px;color:var(--muted2);text-align:right;line-height:1.25}
+.b-soon{color:var(--violet);background:rgba(139,92,246,.13)}
+.feat{display:flex;flex-direction:column;gap:11px;margin-top:18px}
+.feat .it{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;line-height:1.45}
+.feat .it .ck{color:var(--accent);flex:none;margin-top:2px}
+.feat .it b{color:var(--fg);font-weight:600}
+.feat .it span{color:var(--muted)}
+.statline{display:flex;gap:22px;margin-top:22px;flex-wrap:wrap}
+.statline .s .v{font-size:24px;font-weight:900;letter-spacing:-.02em}
+.statline .s .l{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
 
-/* ---------- FOCUS LIST ---------- */
-.focus-list{display:flex;flex-direction:column;gap:14px;flex:1}
-.fitem{display:grid;grid-template-columns:64px 1fr auto;gap:20px;align-items:center;
-  background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:14px;padding:18px 22px;position:relative;overflow:hidden}
-.fitem::before{content:"";position:absolute;left:0;top:0;height:100%;width:4px;background:var(--accent)}
-.fitem .pr{font-size:30px;font-weight:900;color:var(--accent);font-family:'JetBrains Mono'}
-.fitem .ti{font-size:18px;font-weight:700}
-.fitem .de{font-size:13px;color:var(--muted);margin-top:3px}
-.fitem .meta{text-align:right}
-.fitem .meta .p{font-size:26px;font-weight:900}
-.fitem .meta .s{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-
-/* ---------- BRANDS ---------- */
-.brand-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
-.brand{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:13px;padding:15px 16px;position:relative}
-.brand .bn{font-size:16px;font-weight:800;letter-spacing:.02em}
-.brand .bs{font-size:11px;margin-top:2px;font-weight:600}
-.brand .bbar{height:6px;border-radius:99px;background:rgba(255,255,255,.06);margin-top:12px;overflow:hidden}
-.brand .bbar i{display:block;height:100%;width:0;border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
-.dotmark{position:absolute;top:15px;right:15px;width:9px;height:9px;border-radius:50%}
-
-/* ---------- INVEST ---------- */
-.inv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:22px}
-.icard{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:16px;padding:22px}
-.icard .ic-h{display:flex;align-items:center;gap:11px;margin-bottom:14px}
-.icard .ic-ic{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:rgba(56,189,248,.1);color:var(--accent2)}
-.icard .ic-t{font-size:14px;font-weight:700}
-.icard .ic-cost{font-size:30px;font-weight:900;letter-spacing:-.02em}
-.icard .ic-cost small{font-size:14px;font-weight:600;color:var(--muted)}
-.icard .ic-d{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.5}
-.value-band{background:linear-gradient(100deg,rgba(34,197,94,.1),rgba(56,189,248,.06));border:1px solid rgba(34,197,94,.22);border-radius:16px;padding:22px 26px;display:flex;align-items:center;gap:28px}
-.value-band .big{font-size:40px;font-weight:900;color:var(--accent);line-height:1;white-space:nowrap}
-.value-band .txt{font-size:14.5px;color:var(--fg);line-height:1.55}
-.value-band .txt b{color:var(--accent2)}
-
-/* ---------- SUPPORT ---------- */
-.sup-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;flex:1;min-height:0}
-.role-card{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:16px;padding:24px;display:flex;flex-direction:column}
-.role-title{font-size:22px;font-weight:800;line-height:1.15}
-.role-sub{font-size:13px;color:var(--accent2);margin-top:6px;font-weight:600}
-.role-body{font-size:13.5px;color:var(--muted);margin-top:14px;line-height:1.6}
-.scope-list{display:flex;flex-direction:column;gap:10px;margin-top:18px}
-.scope-list .it{display:flex;gap:11px;align-items:flex-start;font-size:13px}
-.scope-list .it .ck{color:var(--accent);flex:none;margin-top:1px}
-.scope-list .it b{color:var(--fg);font-weight:600}
-.stack-wrap h4{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0 0 12px}
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
-.tag{font-size:12px;font-weight:600;padding:7px 13px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--fg)}
-.tag.core{border-color:rgba(34,197,94,.3);color:var(--accent);background:rgba(34,197,94,.07)}
-.kpi-mini{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:6px}
-.kpi-mini .m{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:11px;padding:14px}
-.kpi-mini .m .mv{font-size:15px;font-weight:800;color:var(--accent2)}
-.kpi-mini .m .ml{font-size:11.5px;color:var(--muted);margin-top:3px}
+/* browser mockup */
+.browser{background:#0b1424;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 32px 70px -22px rgba(0,0,0,.75);width:100%}
+.browser .bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:#0e1830;border-bottom:1px solid var(--border)}
+.browser .bar i{width:11px;height:11px;border-radius:50%}
+.browser .bar .u{flex:1;margin-left:12px;font-size:11px;color:var(--muted2);font-family:'JetBrains Mono';background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;padding:5px 11px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.browser img{display:block;width:100%;height:auto;max-height:452px;object-fit:cover;object-position:top center;background:#0b1424}
+.shots{display:grid;gap:14px}
+.shots.two{grid-template-columns:1fr 1fr;align-items:start}
+.shots.two .browser img{max-height:300px}
+.shots .stack{display:grid;gap:14px}
+.shots .stack .browser img{max-height:150px}
+.webgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-content:start}
+.webgrid .browser img{max-height:188px}
+.webcard{display:flex;flex-direction:column;gap:9px}
+.webcard .wmeta{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 2px}
+.webcard .wn{font-size:14px;font-weight:600;color:#fff;letter-spacing:-.01em}
+/* 3D scroll-style tilt entrance on screenshots */
+.prod-grid,.shots,.webgrid{perspective:1600px}
+.browser{transform-origin:50% 100%}
+.active .browser{animation:tilt3d .85s cubic-bezier(.2,.8,.2,1) both}
+.active .shots.two .browser:nth-child(2){animation-delay:.12s}
+.active .shots .stack .browser:nth-child(2){animation-delay:.18s}
+.active .webcard:nth-child(2) .browser{animation-delay:.07s}
+.active .webcard:nth-child(3) .browser{animation-delay:.14s}
+.active .webcard:nth-child(4) .browser{animation-delay:.21s}
+.active .webcard:nth-child(5) .browser{animation-delay:.28s}
+.active .webcard:nth-child(6) .browser{animation-delay:.35s}
+@keyframes tilt3d{0%{opacity:0;transform:rotateX(24deg) translateY(42px) scale(.94)}100%{opacity:1;transform:rotateX(0) translateY(0) scale(1)}}
+@media (prefers-reduced-motion:reduce){.active .browser{animation:none}}
 
 /* ---------- CLOSING ---------- */
 .close{align-items:center;justify-content:center;text-align:center}
-.close h2{font-size:52px;font-weight:900;letter-spacing:-.03em;line-height:1.05}
+.close h2{font-size:50px;font-weight:900;letter-spacing:-.03em;line-height:1.05}
 .close h2 .hl{background:linear-gradient(90deg,#22C55E,#38BDF8);-webkit-background-clip:text;background-clip:text;color:transparent}
-.close p{color:var(--muted);font-size:18px;margin-top:18px;max-width:620px;line-height:1.6}
-.next-steps{display:flex;gap:16px;margin-top:38px}
-.ns{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:14px;padding:20px 24px;min-width:200px;text-align:left}
+.close p{color:var(--muted);font-size:18px;margin-top:18px;max-width:660px;line-height:1.6}
+.next-steps{display:flex;gap:16px;margin-top:36px}
+.ns{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:14px;padding:20px 24px;min-width:210px;text-align:left}
 .ns .n{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:8px}
 .ns .t{font-size:14px;color:var(--fg);line-height:1.4}
+.cta-glow{position:relative;display:inline-flex;align-items:center;gap:10px;margin-top:34px;padding:15px 30px;border-radius:999px;
+  font-size:15px;font-weight:700;letter-spacing:-.01em;color:#04210f;text-decoration:none;cursor:pointer;
+  background:linear-gradient(100deg,#22C55E,#38BDF8);box-shadow:0 10px 30px -8px rgba(34,197,94,.55);
+  transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s;overflow:hidden;z-index:1}
+.cta-glow::before{content:"";position:absolute;inset:0;border-radius:999px;padding:1px;
+  background:linear-gradient(100deg,rgba(255,255,255,.7),transparent 40%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.6}
+.cta-glow::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:shine 3.2s ease-in-out infinite;z-index:-1}
+.cta-glow:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 16px 40px -8px rgba(56,189,248,.6)}
+.cta-glow svg{transition:transform .3s}
+.cta-glow:hover svg{transform:translateX(4px)}
+@keyframes shine{0%{left:-120%}55%,100%{left:140%}}
 
 /* ---------- CHROME ---------- */
 #prog{position:absolute;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:width .5s ease;z-index:30;border-radius:0 3px 3px 0}
-.footer{position:absolute;bottom:22px;left:64px;right:64px;display:flex;align-items:center;justify-content:space-between;z-index:20}
+.footer{position:absolute;bottom:20px;left:60px;right:60px;display:flex;align-items:center;justify-content:space-between;z-index:20}
 .fl{display:flex;align-items:center;gap:10px;font-size:11.5px;color:var(--muted2);letter-spacing:.04em}
 .fl .lg{font-weight:800;color:var(--fg);letter-spacing:.02em}
 .fl .lg span{color:var(--accent)}
@@ -224,9 +194,13 @@ h2.title{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
 
 .nav{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:50;
   background:rgba(10,17,36,.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:999px;padding:9px 14px}
-.nav button{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--fg);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:all .2s}
-.nav button:hover{background:var(--accent);color:#04210f;border-color:var(--accent)}
+.nav button{position:relative;width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--fg);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:transform .25s cubic-bezier(.2,.8,.2,1),background .25s,border-color .25s,box-shadow .25s;overflow:hidden}
+.nav button::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(34,197,94,.55),transparent 70%);opacity:0;transition:opacity .25s}
+.nav button:hover{background:var(--accent);color:#04210f;border-color:var(--accent);transform:translateY(-2px) scale(1.06);box-shadow:0 8px 22px -6px rgba(34,197,94,.6)}
+.nav button:hover::before{opacity:.4}
+.nav button:active{transform:translateY(0) scale(.96)}
+.nav button svg{position:relative;z-index:1}
 .dots{display:flex;gap:9px;padding:0 6px}
 .dot-n{width:9px;height:9px;border-radius:50%;background:var(--secondary);cursor:pointer;transition:all .3s}
 .dot-n.on{background:var(--accent);width:26px;border-radius:99px}
@@ -241,263 +215,279 @@ h2.title{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
   <div class="stage" id="stage">
     <div id="prog"></div>
 
-    <!-- ===== SLIDE 1 · HERO ===== -->
+    <!-- ===== SLIDE 1 · PORTADA ===== -->
     <section class="slide hero active" data-name="Portada">
       <div class="hero-grid">
         <div>
-          <span class="eyebrow r">● Reporte ejecutivo · Junio 2026</span>
-          <h1 class="r d1">Motor de<br><span class="hl">Ingresos IA</span></h1>
-          <p class="lead r d2">Portafolio de automatización e inteligencia artificial del Grupo. De la idea a producción: CRM, dashboards, agentes y mensajería que ya operan y generan resultados.</p>
+          <span class="eyebrow r">● Productos desarrollados · 2026</span>
+          <h1 class="r d1">Lo que ya<br><span class="hl">construimos</span></h1>
+          <p class="lead r d2">Un ecosistema propio de inteligencia artificial, dashboards y aplicaciones web operando para Santa Rosa Paraguay. Productos reales, en producción, generando leads y datos en tiempo real.</p>
           <div class="hero-meta">
-            <div class="chip r d3"><span class="k num" data-count="13">0</span><span class="l">Proyectos</span></div>
-            <div class="chip r d4"><span class="k num" data-count="5" data-suffix="">0</span><span class="l">En producción</span></div>
-            <div class="chip r d5"><span class="k num" data-count="70" data-suffix="%">0</span><span class="l">Avance prom.</span></div>
-          </div>
-          <div class="byline r d6">
-            <div class="av">CR</div>
-            <div>Preparado por <b>Carlos Román</b> — Developer &amp; Paid Media<br>Para <b>Omar</b> · Revisión de portafolio</div>
+            <div class="chip r d3"><span class="k num" data-count="13">0</span><span class="l">Proyectos<br>actuales</span></div>
           </div>
         </div>
         <div class="robot-wrap r d3">
           <div class="robot-glow"></div>
           <div class="ring r1"><div class="dot"></div></div>
           <div class="ring r2"><div class="dot"></div></div>
-          <svg class="robot" viewBox="0 0 240 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- antenna -->
-            <line x1="120" y1="34" x2="120" y2="62" stroke="#38BDF8" stroke-width="4" stroke-linecap="round"/>
-            <circle class="antenna-dot" cx="120" cy="26" r="9" fill="#22C55E"/>
-            <circle cx="120" cy="26" r="9" fill="#22C55E" opacity=".35"/>
-            <!-- head -->
-            <rect x="58" y="60" width="124" height="96" rx="26" fill="url(#hg)" stroke="#33507f" stroke-width="2"/>
-            <!-- face screen -->
-            <rect x="74" y="78" width="92" height="60" rx="14" fill="#0a1326" stroke="#1e3a5f" stroke-width="1.5"/>
-            <!-- eyes -->
-            <g class="eye">
-              <circle cx="101" cy="108" r="11" fill="#38BDF8"/>
-              <circle cx="139" cy="108" r="11" fill="#38BDF8"/>
-              <circle cx="101" cy="108" r="11" fill="#38BDF8" opacity=".4"/>
-              <circle cx="139" cy="108" r="11" fill="#38BDF8" opacity=".4"/>
-            </g>
-            <!-- scan line -->
-            <rect class="scan" x="74" y="84" width="92" height="3" rx="2" fill="#22C55E" opacity=".5"/>
-            <!-- ears -->
-            <rect x="46" y="96" width="12" height="30" rx="6" fill="#33507f"/>
-            <rect x="182" y="96" width="12" height="30" rx="6" fill="#33507f"/>
-            <!-- neck -->
-            <rect x="108" y="156" width="24" height="16" fill="#22324f"/>
-            <!-- body -->
-            <rect x="64" y="170" width="112" height="92" rx="22" fill="url(#bg2)" stroke="#33507f" stroke-width="2"/>
-            <rect x="84" y="188" width="72" height="40" rx="10" fill="#0a1326" stroke="#1e3a5f" stroke-width="1.5"/>
-            <circle cx="104" cy="208" r="5" fill="#22C55E"/>
-            <circle cx="120" cy="208" r="5" fill="#38BDF8"/>
-            <circle cx="136" cy="208" r="5" fill="#8B5CF6"/>
-            <rect x="92" y="240" width="56" height="6" rx="3" fill="#22C55E" opacity=".55"/>
-            <!-- arms -->
-            <rect x="40" y="176" width="18" height="62" rx="9" fill="#22324f" stroke="#33507f" stroke-width="1.5"/>
-            <rect x="182" y="176" width="18" height="62" rx="9" fill="#22324f" stroke="#33507f" stroke-width="1.5"/>
-            <defs>
-              <linearGradient id="hg" x1="58" y1="60" x2="182" y2="156" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#1c2d4d"/><stop offset="1" stop-color="#13203a"/>
-              </linearGradient>
-              <linearGradient id="bg2" x1="64" y1="170" x2="176" y2="262" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#1a2a48"/><stop offset="1" stop-color="#111d36"/>
-              </linearGradient>
-            </defs>
-          </svg>
+          <spline-viewer class="robot-spline" url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
         </div>
       </div>
       <div class="footer">
-        <div class="fl"><span class="lg">Grupo<span>·</span>IA</span> Motor de Ingresos · Automatización</div>
-        <div class="pageno"><b>01</b> / 09</div>
+        <div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Showcase de productos</div>
+        <div class="pageno"><b>01</b> / 11</div>
       </div>
     </section>
 
-    <!-- ===== SLIDE 2 · RESUMEN EJECUTIVO ===== -->
+    <!-- ===== SLIDE 2 · RESUMEN DE PRODUCTOS ===== -->
     <section class="slide" data-name="Resumen">
       <div class="shead">
         <div>
-          <span class="eyebrow cy r">Resumen ejecutivo</span>
-          <h2 class="title r d1">El portafolio <span class="hl">de un vistazo</span></h2>
+          <span class="eyebrow cy r">El ecosistema de un vistazo</span>
+          <h2 class="title r d1">Productos que ya <span class="hl">están operando</span></h2>
         </div>
       </div>
-      <div class="kpis" style="margin-bottom:24px">
-        <div class="kpi r d1"><div class="v"><span class="num" data-count="13">0</span></div><div class="lab">Proyectos en el portafolio</div></div>
-        <div class="kpi am r d2"><div class="v"><span class="num" data-count="7">0</span></div><div class="lab">En curso activos</div></div>
-        <div class="kpi cy r d3"><div class="v"><span class="num" data-count="5">0</span></div><div class="lab">En producción / operativos</div></div>
-        <div class="kpi vi r d4"><div class="v"><span class="num" data-count="70" data-suffix="%">0</span></div><div class="lab">Avance promedio</div></div>
+      <div class="kpis" style="margin-bottom:22px">
+        <div class="kpi r d1"><div class="v"><span class="num" data-count="6">0</span></div><div class="lab">Productos entregados / listos</div></div>
+        <div class="kpi cy r d2"><div class="v"><span class="num" data-count="6">0</span></div><div class="lab">Sitios web por marca en línea</div></div>
+        <div class="kpi am r d3"><div class="v"><span class="num" data-count="2">0</span></div><div class="lab">En desarrollo activo</div></div>
+        <div class="kpi vi r d4"><div class="v"><span class="num" data-count="11" data-suffix="+">0</span></div><div class="lab">Marcas integradas en una plataforma</div></div>
       </div>
-      <div class="two-col">
-        <div class="panel r d3">
-          <h3>Distribución por estado</h3>
-          <div class="ph">13 proyectos clasificados por etapa de ejecución</div>
-          <div class="chart-box"><canvas id="donut"></canvas></div>
-        </div>
-        <div class="panel r d4">
-          <h3>Cobertura por área del negocio</h3>
-          <div class="ph">La IA toca todas las áreas comerciales y de operación</div>
-          <div class="chart-box"><canvas id="areas"></canvas></div>
-        </div>
-      </div>
-      <div class="footer"><div class="fl"><span class="lg">Grupo<span>·</span>IA</span> Resumen ejecutivo</div><div class="pageno"><b>02</b> / 09</div></div>
+      <div class="ptiles r d3" id="ptiles"></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Resumen de productos</div><div class="pageno"><b>02</b> / 11</div></div>
     </section>
 
-    <!-- ===== SLIDE 3 · HISTÓRICO ===== -->
-    <section class="slide" data-name="Momentum">
+    <!-- ===== SLIDE 3 · BOT AGÉNTICO · DASHBOARD + CRM ===== -->
+    <section class="slide" data-name="BOT · Dashboard">
       <div class="shead">
         <div>
-          <span class="eyebrow r">Momentum</span>
-          <h2 class="title r d1">Avance sostenido, <span class="hl">corte a corte</span></h2>
-          <p class="subtitle r d2">Evolución del % de avance en cuatro cortes (06/04 → hoy). La curva muestra ejecución constante y entregas que cruzan a producción.</p>
+          <span class="eyebrow r">Producto · Agente IA <span class="badge b-done" style="margin-left:8px">● En producción</span></span>
+          <h2 class="title r d1">BOT Agéntico <span class="hl">+ Dashboard CRM</span></h2>
         </div>
       </div>
-      <div class="panel r d3" style="flex:1">
-        <div class="chart-box"><canvas id="line"></canvas></div>
+      <div class="prod-grid">
+        <div>
+          <p class="subtitle r d1">App propia que atiende WhatsApp 24/7, <b style="color:#fff">califica cada conversación con IA</b> y la convierte en lead. Todo se opera desde un <b style="color:#fff">dashboard con CRM propio</b>: bandeja en vivo, embudo y control del bot por marca.</p>
+          <div class="feat">
+            <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Bandeja unificada en vivo</b> <span>— conversaciones abiertas, asignación al bot o a un asesor.</span></div></div>
+            <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Embudo integrado</b> <span>— Nuevo, Contactado, Calificado y Descartado en una sola vista.</span></div></div>
+            <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Configuración por marca</b> <span>— BOT SRPY / Renew: identidad, Master Prompt y base de conocimiento (RAG).</span></div></div>
+            <div class="it r d5"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Control total del bot</b> <span>— encender/apagar, etiquetas, encuestas, flows y respuestas rápidas.</span></div></div>
+          </div>
+          <div class="statline">
+            <div class="s r d4"><div class="v num" style="color:#22C55E" data-count="54">0</div><div class="l">Conversaciones abiertas</div></div>
+            <div class="s r d5"><div class="v" style="color:#38BDF8">24/7</div><div class="l">Atención automática</div></div>
+            <div class="s r d6"><div class="v" style="color:#8B5CF6">RAG</div><div class="l">Conocimiento por marca</div></div>
+          </div>
+        </div>
+        <div class="shots two r d3">
+          <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">dashboard · bandeja + CRM</span></div><img src="assets/bot-inbox.png" alt="Dashboard del BOT con CRM — bandeja de conversaciones en vivo"></div>
+          <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">configuración · Master Prompt Renew</span></div><img src="assets/bot-config.png" alt="Configuración del BOT — Master Prompt e identidad por marca"></div>
+        </div>
       </div>
-      <div class="footer"><div class="fl"><span class="lg">Grupo<span>·</span>IA</span> Histórico de avance</div><div class="pageno"><b>03</b> / 09</div></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> BOT Agéntico · Dashboard CRM</div><div class="pageno"><b>03</b> / 11</div></div>
     </section>
 
-    <!-- ===== SLIDE 4 · PORTAFOLIO ===== -->
-    <section class="slide dense" data-name="Portafolio">
+    <!-- ===== SLIDE 4 · BOT · INTEGRACIÓN BITRIX24 (DEVELOPERS) ===== -->
+    <section class="slide" data-name="BOT · Bitrix">
       <div class="shead">
         <div>
-          <span class="eyebrow cy r">Portafolio completo</span>
-          <h2 class="title r d1">13 proyectos, <span class="hl">una sola dirección</span></h2>
+          <span class="eyebrow cy r">Producto · Integración <span class="badge b-done" style="margin-left:8px">● En producción</span></span>
+          <h2 class="title r d1">Integrado a <span class="hl">Bitrix24</span> como developers</h2>
         </div>
       </div>
-      <div class="filters r d2">
-        <button class="fbtn on" data-f="all">Todos <span class="cnt">13</span></button>
-        <button class="fbtn" data-f="done">Completados <span class="cnt">3</span></button>
-        <button class="fbtn" data-f="prog">En curso <span class="cnt">7</span></button>
-        <button class="fbtn" data-f="none">Sin iniciar <span class="cnt">1</span></button>
-        <button class="fbtn" data-f="rec">Recurrentes <span class="cnt">2</span></button>
+      <div class="prod-grid rev">
+        <div class="shots two r d3">
+          <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">bitrix24 · contact center</span></div><img src="assets/bot-integraciones.png" alt="Bitrix24 Contact Center — canales integrados, WhatsApp BOT SRPY"></div>
+          <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">integración · webhook + round-robin</span></div><img src="assets/bot-bitrix.png" alt="Integración Bitrix24 — webhook REST inbound y pool de asesores round-robin"></div>
+        </div>
+        <div>
+          <p class="subtitle r d1">El bot se conecta a Bitrix24 a nivel <b style="color:#fff">developer</b>: WhatsApp (BOT SRPY) como canal del Contact Center y un <b style="color:#fff">webhook REST inbound</b> que crea el lead sólo cuando la IA detecta intención real de compra.</p>
+          <div class="feat">
+            <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Webhook REST inbound</b> <span>— <code style="color:#38BDF8">crm.lead.add</code> con scope CRM, sin tocar el front de Bitrix.</span></div></div>
+            <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Reparto round-robin</b> <span>— pool de asesores atómico server-side, sin duplicar ni colisionar leads.</span></div></div>
+            <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Solo leads calificados</b> <span>— descarta saludos y consultas sin intención antes de crear el prospecto.</span></div></div>
+            <div class="it r d5"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Multicanal nativo</b> <span>— WhatsApp, Instagram, Facebook y Messenger sobre el mismo Contact Center.</span></div></div>
+          </div>
+          <div class="statline">
+            <div class="s r d4"><div class="v" style="color:#22C55E">REST</div><div class="l">Webhook inbound</div></div>
+            <div class="s r d5"><div class="v" style="color:#38BDF8">Round-robin</div><div class="l">Reparto de leads</div></div>
+            <div class="s r d6"><div class="v" style="color:#8B5CF6">IA</div><div class="l">Filtro de intención</div></div>
+          </div>
+        </div>
       </div>
-      <div class="pgrid r d3" id="pgrid"></div>
-      <div class="footer"><div class="fl"><span class="lg">Grupo<span>·</span>IA</span> Control de proyectos</div><div class="pageno"><b>04</b> / 09</div></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> BOT · Integración Bitrix24</div><div class="pageno"><b>04</b> / 11</div></div>
     </section>
 
-    <!-- ===== SLIDE 5 · FOCO INMEDIATO ===== -->
-    <section class="slide" data-name="Foco">
+    <!-- ===== SLIDE 4 · DASHBOARD META ADS ===== -->
+    <section class="slide" data-name="Meta Ads">
       <div class="shead">
         <div>
-          <span class="eyebrow r">Foco inmediato · alta prioridad</span>
-          <h2 class="title r d1">Lo que se <span class="hl">cierra ahora</span></h2>
-          <p class="subtitle r d2">Cuatro frentes prioritarios con su próximo paso concreto y fecha estimada de cierre.</p>
+          <span class="eyebrow cy r">Producto · Dashboard <span class="badge b-done" style="margin-left:8px">● En producción</span></span>
+          <h2 class="title r d1">Dashboard <span class="hl">Meta Ads</span> en tiempo real</h2>
         </div>
       </div>
-      <div class="focus-list">
-        <div class="fitem r d2"><div class="pr">P1</div><div><div class="ti">Implementación Bitrix Comercial</div><div class="de">CRM por cada marca del grupo · Próximo: cerrar JT, GWM y CDE</div></div><div class="meta"><div class="p" style="color:#F59E0B">85%</div><div class="s">Fin est. 29 jun</div></div></div>
-        <div class="fitem r d3"><div class="pr">P2</div><div><div class="ti">App Subasta (Renew)</div><div class="de">Subastas de usados · backend + seguridad · dominio renewsubastas.com.py aplicado</div></div><div class="meta"><div class="p" style="color:#22C55E">100%</div><div class="s">En producción</div></div></div>
-        <div class="fitem r d4"><div class="pr">P3</div><div><div class="ti">Implementación Bitrix Adm</div><div class="de">Facturación, pagos y escrituración · Próximo: carga de documentos</div></div><div class="meta"><div class="p" style="color:#F59E0B">85%</div><div class="s">Fin est. 16 jun</div></div></div>
-        <div class="fitem r d5"><div class="pr">P4</div><div><div class="ti">Dashboard de Importaciones</div><div class="de">Scraping de mercado, insights y recomendaciones · Próximo: pruebas y presentación</div></div><div class="meta"><div class="p" style="color:#F59E0B">40%</div><div class="s">Fin est. 27 jun</div></div></div>
+      <div class="prod-grid rev">
+        <div class="browser r d2"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">santarosa · dashboard meta ads</span></div><img src="assets/metaads.png" alt="Dashboard Meta Ads en tiempo real"></div>
+        <div>
+          <p class="subtitle r d1">Plataforma centralizada que monitorea la pauta de <b style="color:#fff">Meta Ads</b> con los parámetros que pidieron <b style="color:#fff">Marketing y Comercial</b>, conectada en vivo y cruzada con las ventas reales del CRM.</p>
+          <div class="feat">
+            <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Leads, alcance, CPL, frecuencia y conversiones</b> <span>en un solo lugar.</span></div></div>
+            <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>11+ marcas</b> <span>integradas en una sola plataforma.</span></div></div>
+            <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Alertas automáticas</b> <span>y cruce con ventas reales del CRM.</span></div></div>
+          </div>
+          <div class="statline">
+            <div class="s r d4"><div class="v num" style="color:#38BDF8" data-count="11" data-suffix="+">0</div><div class="l">Marcas integradas</div></div>
+            <div class="s r d5"><div class="v num" style="color:#22C55E" data-count="100" data-suffix="%">0</div><div class="l">Tiempo real</div></div>
+            <div class="s r d6"><div class="v" style="color:#F59E0B">24/7</div><div class="l">Conectado a Meta</div></div>
+          </div>
+        </div>
       </div>
-      <div class="footer"><div class="fl"><span class="lg">Grupo<span>·</span>IA</span> Foco inmediato</div><div class="pageno"><b>05</b> / 09</div></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Dashboard Meta Ads</div><div class="pageno"><b>05</b> / 11</div></div>
     </section>
 
-    <!-- ===== SLIDE 6 · SITIOS WEB ===== -->
+    <!-- ===== SLIDE 5 · DASHBOARD CRM BITRIX ===== -->
+    <section class="slide" data-name="CRM Leads">
+      <div class="shead">
+        <div>
+          <span class="eyebrow r">Producto · Dashboard <span class="badge b-done" style="margin-left:8px">● En producción</span></span>
+          <h2 class="title r d1">Dashboard CRM <span class="hl">Bitrix · Leads</span></h2>
+        </div>
+      </div>
+      <div class="prod-grid">
+        <div>
+          <p class="subtitle r d1">Vista ejecutiva sobre los datos reales de <b style="color:#fff">Bitrix24</b>: comparativa de períodos, prospectos, conversión y <b style="color:#fff">forecast de fin de mes</b>, con drill-down por marca, departamento y asesor.</p>
+          <div class="feat">
+            <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Prospectos, negociaciones y ventas concretadas</b> <span>en vivo.</span></div></div>
+            <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Forecast de cierre</b> <span>— pipeline × tasa de cierre + ventas del mes.</span></div></div>
+            <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Salud de marca, calidad de lead, embudo y orígenes</b> <span>por asesor.</span></div></div>
+          </div>
+          <div class="statline">
+            <div class="s r d4"><div class="v num" style="color:#38BDF8" data-count="3364">0</div><div class="l">Prospectos del período</div></div>
+            <div class="s r d5"><div class="v" style="color:#22C55E">Gs 221M</div><div class="l">Forecast fin de mes</div></div>
+            <div class="s r d6"><div class="v num" style="color:#8B5CF6" data-count="11" data-suffix="+">0</div><div class="l">Marcas en drill-down</div></div>
+          </div>
+        </div>
+        <div class="browser r d2"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">dashboard crm · bitrix24</span></div><img src="assets/bitrix-crm.png" alt="Dashboard CRM Bitrix — Comparativa de Periodos"></div>
+      </div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Dashboard CRM Bitrix</div><div class="pageno"><b>06</b> / 11</div></div>
+    </section>
+
+    <!-- ===== SLIDE 6 · PDI PREENTREGA ===== -->
+    <section class="slide" data-name="PDI Preentrega">
+      <div class="shead">
+        <div>
+          <span class="eyebrow cy r">Producto · Operación <span class="badge b-done" style="margin-left:8px">● En producción</span></span>
+          <h2 class="title r d1">PDI · Seguimiento de <span class="hl">Preentrega</span></h2>
+        </div>
+      </div>
+      <div class="prod-grid rev">
+        <div class="browser r d2"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">pdi · seguimiento de preentrega</span></div><img src="assets/pdi-preentrega.png" alt="PDI Seguimiento de Preentrega"></div>
+        <div>
+          <p class="subtitle r d1">App de operación que ordena la <b style="color:#fff">cola de pedidos por fecha de entrega</b>, para que la entrega más próxima se procese primero. Pensada con Post Venta para el flujo real de stock y despacho.</p>
+          <div class="feat">
+            <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Estados claros</b> <span>— en cola, pendientes, finalizados, por chofer.</span></div></div>
+            <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Carga ágil</b> <span>— importar desde Excel, imagen o factura.</span></div></div>
+            <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Reportes y usuarios</b> <span>— trazabilidad de cada vehículo hasta la entrega.</span></div></div>
+          </div>
+          <div class="statline">
+            <div class="s r d4"><div class="v" style="color:#22C55E">Por fecha</div><div class="l">Orden de entrega</div></div>
+            <div class="s r d5"><div class="v" style="color:#38BDF8">Excel/IMG</div><div class="l">Importación flexible</div></div>
+            <div class="s r d6"><div class="v" style="color:#F59E0B">100%</div><div class="l">Trazabilidad</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> PDI Preentrega</div><div class="pageno"><b>07</b> / 11</div></div>
+    </section>
+
+    <!-- ===== SLIDE 7 · APP SUBASTAS ===== -->
+    <section class="slide" data-name="App Subastas">
+      <div class="shead">
+        <div>
+          <span class="eyebrow cy r">Producto · App Web <span class="badge b-ready" style="margin-left:8px">● Lista · a producción</span></span>
+          <h2 class="title r d1">App de <span class="hl">Subastas</span> · Renew</h2>
+        </div>
+      </div>
+      <div class="prod-grid">
+        <div>
+          <p class="subtitle r d1">Aplicación web de <b style="color:#fff">subastas de vehículos en tiempo real</b> para Renew. Código preparado y lista para salir a producción: catálogo verificado, puja en vivo y notificaciones al instante.</p>
+          <div class="feat">
+            <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Subastas en vivo</b> <span>con anti-sniping de 60 segundos.</span></div></div>
+            <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Catálogo seleccionado</b> <span>— vehículos verificados por Santa Rosa Paraguay.</span></div></div>
+            <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Puja + notificaciones</b> <span>al instante cuando alguien supera tu oferta.</span></div></div>
+          </div>
+          <div class="statline">
+            <div class="s r d4"><div class="v num" style="color:#22C55E" data-count="19">0</div><div class="l">Subastas cargadas</div></div>
+            <div class="s r d5"><div class="v" style="color:#38BDF8">60s</div><div class="l">Anti-sniping</div></div>
+            <div class="s r d6"><div class="v" style="color:#8B5CF6">Live</div><div class="l">Puja en tiempo real</div></div>
+          </div>
+        </div>
+        <div class="shots two r d3">
+          <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">renewsubastas.com.py · catálogo</span></div><img src="assets/subastas-catalogo.png" alt="Catálogo de subastas Renew"></div>
+          <div class="stack">
+            <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">detalle · puja en vivo</span></div><img src="assets/subastas-detalle.png" alt="Detalle de subasta con puja en vivo"></div>
+            <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">login Renew</span></div><img src="assets/subastas-renew.png" alt="Login de Renew Subastas"></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> App de Subastas Renew</div><div class="pageno"><b>08</b> / 11</div></div>
+    </section>
+
+    <!-- ===== SLIDE 8 · PLATAFORMA PAUTAS IA ===== -->
+    <section class="slide" data-name="Pautas IA">
+      <div class="shead">
+        <div>
+          <span class="eyebrow am r">Producto · Plataforma <span class="badge b-prog" style="margin-left:8px">● En desarrollo</span></span>
+          <h2 class="title r d1">Plataforma Integral de <span class="hl">Pautas con IA</span></h2>
+        </div>
+      </div>
+      <div class="prod-grid rev">
+        <div class="browser r d2"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">plataforma de pautas · IA</span></div><img src="assets/pautas-ia.png" alt="Plataforma Integral de Pautas con IA"></div>
+        <div>
+          <p class="subtitle r d1">Una sola interfaz para <b style="color:#fff">crear y gestionar campañas en Meta, Google Ads y TikTok Ads</b>, con audiencias, optimización y reportes asistidos por IA. En desarrollo.</p>
+          <div class="feat">
+            <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Meta · Google Ads · TikTok Ads</b> <span>desde un mismo panel.</span></div></div>
+            <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Audiencias y optimización con IA</b> <span>— menos trabajo manual.</span></div></div>
+            <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Reportes unificados</b> <span>— una vista para todo el equipo.</span></div></div>
+          </div>
+          <div class="statline">
+            <div class="s r d4"><div class="v" style="color:#22C55E">+32%</div><div class="l">Alcance proyectado</div></div>
+            <div class="s r d5"><div class="v" style="color:#38BDF8">+48%</div><div class="l">Eficiencia</div></div>
+            <div class="s r d6"><div class="v" style="color:#8B5CF6">+27%</div><div class="l">Conversión</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Plataforma de Pautas IA</div><div class="pageno"><b>09</b> / 11</div></div>
+    </section>
+
+    <!-- ===== SLIDE 9 · SITIOS WEB + IMPORTACIONES ===== -->
     <section class="slide" data-name="Sitios web">
       <div class="shead">
         <div>
-          <span class="eyebrow cy r">Desarrollo de sitios web</span>
+          <span class="eyebrow r">Producto · Sitios web por marca <span class="badge b-done" style="margin-left:8px">● En línea</span></span>
           <h2 class="title r d1">Una web propia <span class="hl">por marca</span></h2>
-          <p class="subtitle r d2">11 marcas en el pipeline · 5 ya en línea, JMEV a un paso del dominio, 5 marcas en cola bajo demanda.</p>
-        </div>
-        <div style="display:flex;gap:22px;text-align:right">
-          <div><div style="font-size:34px;font-weight:900;color:#22C55E" class="num" data-count="5">0</div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">En línea</div></div>
-          <div><div style="font-size:34px;font-weight:900;color:#F59E0B" class="num" data-count="1">0</div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">Por cerrar</div></div>
-          <div><div style="font-size:34px;font-weight:900;color:#64748B" class="num" data-count="5">0</div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">En cola</div></div>
+          <p class="subtitle r d2">Sitios desarrollados y en línea para las marcas del grupo — diseño, performance y cotización en cada uno.</p>
         </div>
       </div>
-      <div class="brand-grid r d3" id="brandGrid"></div>
-      <div class="footer"><div class="fl"><span class="lg">Grupo<span>·</span>IA</span> Sitios web por marca</div><div class="pageno"><b>06</b> / 09</div></div>
+      <div class="webgrid r d3" id="webtiles"></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Sitios web &amp; Importaciones</div><div class="pageno"><b>10</b> / 11</div></div>
     </section>
 
-    <!-- ===== SLIDE 7 · INVERSIÓN ===== -->
-    <section class="slide" data-name="Inversión">
-      <div class="shead">
-        <div>
-          <span class="eyebrow r">Inversión &amp; impacto</span>
-          <h2 class="title r d1">Costo mínimo, <span class="hl">capacidad enorme</span></h2>
-          <p class="subtitle r d2">Todo el portafolio corre con un stack liviano y costos operativos marginales frente al valor que genera.</p>
-        </div>
-      </div>
-      <div class="inv-grid">
-        <div class="icard r d2">
-          <div class="ic-h"><div class="ic-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a7 7 0 0 1 7 7c0 2.4-1.2 4.5-3 5.7V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.3C6.2 13.5 5 11.4 5 9a7 7 0 0 1 7-7Z"/><path d="M9 22h6"/></svg></div><div class="ic-t">Modelos de IA · Claude</div></div>
-          <div class="ic-cost">100 <small>USD/mes</small></div>
-          <div class="ic-d">Motor de los dashboards y agentes. Aplicado desde el 11/06.</div>
-        </div>
-        <div class="icard r d3">
-          <div class="ic-h"><div class="ic-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg></div><div class="ic-t">Mensajería masiva · Ycloud</div></div>
-          <div class="ic-cost">0,067 <small>USD/msj</small></div>
-          <div class="ic-d">WhatsApp API para MKTG y Post Venta (NPS). Reemplaza a Witty.</div>
-        </div>
-        <div class="icard r d4">
-          <div class="ic-h"><div class="ic-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg></div><div class="ic-t">Ycloud Asesores</div></div>
-          <div class="ic-cost">Sin <small>costo</small></div>
-          <div class="ic-d">Evita el bloqueo de WhatsApp Business. Solo asesores con cuenta.</div>
-        </div>
-      </div>
-      <div class="value-band r d5">
-        <div class="big">+9 sistemas</div>
-        <div class="txt">operando con un costo combinado cercano a <b>~100 USD/mes</b> más mensajería por uso. Un agente de leads, un CRM por marca, dashboards de Meta Ads, importaciones, PDI y pauta — todo construido in-house y <b>escalable sin licencias por usuario.</b></div>
-      </div>
-      <div class="footer"><div class="fl"><span class="lg">Grupo<span>·</span>IA</span> Inversión &amp; impacto</div><div class="pageno"><b>07</b> / 09</div></div>
-    </section>
-
-    <!-- ===== SLIDE 8 · PERFIL DE SOPORTE ===== -->
-    <section class="slide" data-name="El pedido">
-      <div class="shead">
-        <div>
-          <span class="eyebrow cy r">El pedido · perfil de soporte</span>
-          <h2 class="title r d1">Para escalar, <span class="hl">necesito apoyo</span></h2>
-          <p class="subtitle r d2">El portafolio ya supera los 8 proyectos activos. Un perfil semi-senior libera la dirección técnica y sostiene la operación diaria.</p>
-        </div>
-      </div>
-      <div class="sup-grid">
-        <div class="role-card r d2">
-          <div class="role-title">Analista / Desarrollador de Automatización e IA</div>
-          <div class="role-sub">Semi-Senior · Full-time · reporta a Carlos Román</div>
-          <div class="role-body">Ejecuta, mantiene y escala el portafolio del Motor de Ingresos IA, liberando la dirección técnica para diseño y arquitectura.</div>
-          <div class="scope-list">
-            <div class="it"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Automatización n8n</b> — flujos self-hosted e integraciones con APIs.</div></div>
-            <div class="it"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Dashboards HTML/JS</b> — Meta Ads, importaciones, PDI, planning · Bitrix24.</div></div>
-            <div class="it"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>CRM &amp; Agentes IA</b> — config por marca, bots de WhatsApp, base de conocimiento.</div></div>
-            <div class="it"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Scraping &amp; reportería</b> — Python, limpieza de datos y reportes mensuales.</div></div>
-          </div>
-        </div>
-        <div class="stack-wrap r d3">
-          <h4>Stack imprescindible</h4>
-          <div class="tags">
-            <span class="tag core">Python</span><span class="tag core">APIs REST</span><span class="tag core">n8n</span>
-            <span class="tag core">HTML/CSS/JS</span><span class="tag core">Bitrix24</span><span class="tag core">Git</span><span class="tag core">Excel avanzado</span>
-          </div>
-          <h4>Deseables</h4>
-          <div class="tags">
-            <span class="tag">Meta API</span><span class="tag">Ycloud</span><span class="tag">LLMs</span><span class="tag">React+Vite</span><span class="tag">Netlify</span><span class="tag">SQL</span><span class="tag">Flutter</span>
-          </div>
-          <h4>KPIs del rol</h4>
-          <div class="kpi-mini">
-            <div class="m"><div class="mv">Uptime n8n</div><div class="ml">Flujos monitoreados y estables</div></div>
-            <div class="m"><div class="mv">Plazos</div><div class="ml">Proyectos al día vs. estimado</div></div>
-            <div class="m"><div class="mv">Incidencias</div><div class="ml">Tickets resueltos</div></div>
-            <div class="m"><div class="mv">Reportes</div><div class="ml">Entregados a tiempo</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="footer"><div class="fl"><span class="lg">Grupo<span>·</span>IA</span> Perfil de soporte (borrador)</div><div class="pageno"><b>08</b> / 09</div></div>
-    </section>
-
-    <!-- ===== SLIDE 9 · CIERRE ===== -->
+    <!-- ===== SLIDE 10 · CIERRE ===== -->
     <section class="slide close" data-name="Cierre">
-      <span class="eyebrow r">Próximos pasos</span>
-      <h2 class="r d1">De portafolio a <span class="hl">plataforma</span></h2>
-      <p class="r d2">13 proyectos, 5 en producción, 70% de avance promedio y un costo operativo mínimo. La base está. Ahora toca cerrar prioridades, sumar un perfil de soporte y escalar.</p>
+      <span class="eyebrow r">En síntesis</span>
+      <h2 class="r d1">De herramientas sueltas a una <span class="hl">plataforma propia</span></h2>
+      <p class="r d2">Un BOT que genera leads, dashboards de Meta Ads y CRM en tiempo real, PDI de preentrega, la app de Subastas lista para producción, sitios web por marca y dos plataformas en desarrollo — todo construido in-house para Santa Rosa.</p>
       <div class="next-steps">
-        <div class="ns r d3"><div class="n">● Esta semana</div><div class="t">Cerrar Bitrix Comercial (JT, GWM, CDE) y avanzar Dashboard de Importaciones.</div></div>
-        <div class="ns r d4"><div class="n">● Corto plazo</div><div class="t">Lanzar Ycloud Asesores y completar las webs JMEV y JETOUR.</div></div>
-        <div class="ns r d5"><div class="n">● Decisión</div><div class="t">Aprobar el perfil de soporte semi-senior para sostener el ritmo.</div></div>
+        <div class="ns r d3"><div class="n">● Ya operando</div><div class="t">BOT de leads, Meta Ads, CRM Bitrix, PDI y sitios web por marca.</div></div>
+        <div class="ns r d4"><div class="n">● Por salir</div><div class="t">App de Subastas Renew a producción con su dominio.</div></div>
+        <div class="ns r d5"><div class="n">● En desarrollo</div><div class="t">Plataforma de pautas con IA y dashboard de importaciones.</div></div>
       </div>
-      <div class="footer"><div class="fl"><span class="lg">Grupo<span>·</span>IA</span> Gracias · Carlos Román</div><div class="pageno"><b>09</b> / 09</div></div>
+      <a class="cta-glow r d6" href="https://press-omar.vercel.app" target="_blank" rel="noopener">
+        <span>Explorar la plataforma</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      </a>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Gracias · Carlos Román</div><div class="pageno"><b>11</b> / 11</div></div>
     </section>
 
   </div>
@@ -511,71 +501,53 @@ h2.title{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
 </div>
 
 <script>
-/* ---------- DATA ---------- */
-const PROJECTS=[
- {n:"Implementación Bitrix Comercial",d:"Comercial",c:"CRM",s:"prog",p:85,next:"Cerrar JT, GWM y CDE"},
- {n:"App Subasta (Renew)",d:"Comercial",c:"App",s:"done",p:100,next:"Dominio aplicado"},
- {n:"Implementación Bitrix Adm",d:"Admin & Finanzas",c:"CRM",s:"prog",p:85,next:"Carga de documentos"},
- {n:"Dashboard de Importaciones",d:"Comercial",c:"Dashboard",s:"prog",p:40,next:"Pruebas + presentación"},
- {n:"Dashboard de PDI",d:"Post Venta",c:"Dashboard",s:"prog",p:95,next:"Prueba 2da quincena junio"},
- {n:"Dashboard Creación de Pauta",d:"Marketing",c:"Dashboard",s:"prog",p:40,next:"Etapa de prueba"},
- {n:"Ycloud Mensajería Masiva",d:"MKTG & Post Venta",c:"WhatsApp API",s:"prog",p:90,next:"Capacitación + envío prueba"},
- {n:"Dashboard Producto Planning PY–UY",d:"Comercial",c:"Dashboard",s:"prog",p:40,next:"Reunión con UY"},
- {n:"Ycloud Asesores",d:"Comercial",c:"WhatsApp API",s:"none",p:0,next:"Iniciar (2 semanas)"},
- {n:"Agente de Ventas (Leads)",d:"Comercial",c:"Agente IA",s:"done",p:100,next:"Operativo · lead a Bitrix"},
- {n:"Dashboard Meta Ads",d:"Marketing",c:"Dashboard",s:"done",p:100,next:"Operativo"},
- {n:"Sitio web · marcas grandes",d:"Marketing",c:"Recurrente",s:"rec",p:null,next:"Próx: JT, GWM"},
- {n:"Sitio web · marcas chicas",d:"Marketing",c:"Recurrente",s:"rec",p:null,next:"Próx: JMEV, JAC, SE, ZK"},
-];
-const BADGE={done:["b-done","Completado"],prog:["b-prog","En curso"],none:["b-none","Sin iniciar"],rec:["b-rec","Recurrente"]};
-const BARC={done:"gr",prog:"am",none:"am",rec:"am"};
+/* ---------- ICONS ---------- */
+const IC={
+ bot:'<path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/>',
+ chart:'<path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="8" rx="1"/><rect x="12" y="6" width="3" height="12" rx="1"/><rect x="17" y="13" width="3" height="5" rx="1"/>',
+ crm:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+ pdi:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/>',
+ auction:'<path d="m14 13-7.5 7.5a2.12 2.12 0 0 1-3-3L11 10"/><path d="m16 16 6-6M8 8l6-6M9 7l8 8M21 11l-8-8"/>',
+ ads:'<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+ web:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+ import:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>'
+};
 
-const BRANDS=[
- {n:"JMEV",st:"En curso",p:95,c:"#F59E0B",note:"Falta asociar dominio"},
- {n:"JETOUR",st:"Sin iniciar",p:0,c:"#64748B",note:"Inicio 19/06"},
- {n:"GWM",st:"Sin iniciar",p:0,c:"#64748B",note:"En cola"},
- {n:"SOUEAST",st:"Sin iniciar",p:0,c:"#64748B",note:"En cola"},
- {n:"JAC",st:"Sin iniciar",p:0,c:"#64748B",note:"En cola"},
- {n:"ZEEKR",st:"Sin iniciar",p:0,c:"#64748B",note:"En cola"},
- {n:"RENEW",st:"En línea",p:100,c:"#22C55E",note:"Operativo"},
- {n:"MMC",st:"En línea",p:100,c:"#22C55E",note:"Operativo"},
- {n:"SANTA ROSA",st:"En línea",p:100,c:"#22C55E",note:"Operativo"},
- {n:"LEAPMOTOR",st:"En línea",p:100,c:"#22C55E",note:"Operativo"},
- {n:"XPENG",st:"En línea",p:100,c:"#22C55E",note:"Operativo"},
+/* ---------- PRODUCT TILES (overview) ---------- */
+const PRODUCTS=[
+ {ic:'bot',t:'BOT Agéntico de Ventas',d:'App en Bitrix: conecta, califica y genera leads por WhatsApp.',b:['b-done','En producción']},
+ {ic:'chart',t:'Dashboard Meta Ads',d:'Pauta de Meta en tiempo real, cruzada con ventas del CRM.',b:['b-done','En producción']},
+ {ic:'crm',t:'Dashboard CRM Bitrix',d:'Leads, conversión y forecast por marca y asesor.',b:['b-done','En producción']},
+ {ic:'pdi',t:'PDI Preentrega',d:'Cola de pedidos ordenada por fecha de entrega.',b:['b-done','En producción']},
+ {ic:'auction',t:'App de Subastas Renew',d:'Subastas de vehículos en vivo. Lista para producción.',b:['b-ready','A producción']},
+ {ic:'web',t:'Sitios web por marca',d:'Santa Rosa, Leapmotor, Mitsubishi, Xpeng, Renew, JMEV.',b:['b-done','En línea']},
+ {ic:'ads',t:'Plataforma de Pautas IA',d:'Meta + Google + TikTok Ads en una sola interfaz.',b:['b-prog','En desarrollo']},
+ {ic:'import',t:'Dashboard Importaciones',d:'Seguimiento de importaciones del grupo.',b:['b-prog','En desarrollo']},
 ];
-
-/* ---------- BUILD PROJECT CARDS ---------- */
-const pg=document.getElementById('pgrid');
-PROJECTS.forEach(p=>{
-  const[bc,bt]=BADGE[p.s];
-  const el=document.createElement('div');
-  el.className='pcard';el.dataset.s=p.s;
-  const pct=p.p===null?'—':p.p+'%';
-  const barw=p.p===null?100:p.p;
-  const barcl=p.s==='rec'?'':' '+BARC[p.s];
-  const barstyle=p.s==='rec'?'background:rgba(139,92,246,.4)':'';
-  el.innerHTML=`<div class="pc-top"><span class="pc-cat">${p.c}</span><span class="badge ${bc}">${bt}</span></div>
-    <div class="pc-name">${p.n}</div><div class="pc-dep">${p.d}</div>
-    <div class="pbar"><i class="${barcl}" data-w="${barw}" style="${barstyle}"></i></div>
-    <div class="pc-foot"><span class="pc-pct" style="color:${p.s==='done'?'#22C55E':p.s==='rec'?'#8B5CF6':'#F59E0B'}">${pct}</span><span class="pc-next">${p.next}</span></div>`;
-  el.dataset.dep=p.d;
-  pg.appendChild(el);
+const pt=document.getElementById('ptiles');
+PRODUCTS.forEach(p=>{
+  const el=document.createElement('div');el.className='ptile';
+  el.innerHTML=`<div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${IC[p.ic]}</svg></div>
+    <div class="tn">${p.t}</div><div class="td">${p.d}</div>
+    <span class="badge ${p.b[0]}">${p.b[1]}</span>`;
+  pt.appendChild(el);
 });
-document.querySelectorAll('.fbtn').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));b.classList.add('on');
-  const f=b.dataset.f;
-  document.querySelectorAll('.pcard').forEach(c=>c.classList.toggle('hide',!(f==='all'||c.dataset.s===f)));
-}));
 
-/* ---------- BUILD BRANDS ---------- */
-const bgd=document.getElementById('brandGrid');
-BRANDS.forEach(b=>{
-  const el=document.createElement('div');el.className='brand';
-  el.innerHTML=`<div class="dotmark" style="background:${b.c};box-shadow:0 0 10px ${b.c}"></div>
-    <div class="bn">${b.n}</div><div class="bs" style="color:${b.c}">${b.st}</div>
-    <div class="bbar"><i data-w="${b.p}" style="background:${b.c}"></i></div>
-    <div style="font-size:10.5px;color:var(--muted2);margin-top:9px">${b.note}</div>`;
-  bgd.appendChild(el);
+/* ---------- WEB TILES (slide 9) ---------- */
+const WEBS=[
+ {n:'Santa Rosa Paraguay',u:'santarosa.com.py',img:'web-santarosa.png',b:['b-done','En línea']},
+ {n:'Leapmotor',u:'leapmotor · srpy',img:'web-leapmotor.png',b:['b-done','En línea']},
+ {n:'Mitsubishi · L200',u:'mitsubishi · srpy',img:'web-mitsubishi.png',b:['b-done','En línea']},
+ {n:'Xpeng',u:'xpeng · srpy',img:'web-xpeng.png',b:['b-done','En línea']},
+ {n:'Renew · Seminuevos',u:'renew · ERP integral',img:'web-renew.png',b:['b-done','En línea']},
+ {n:'JMEV',u:'jmev · srpy',img:'web-jmev.png',b:['b-done','En línea']},
+];
+const wt=document.getElementById('webtiles');
+WEBS.forEach(w=>{
+  const el=document.createElement('div');el.className='webcard';
+  el.innerHTML=`<div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">${w.u}</span></div><img src="assets/${w.img}" alt="Sitio web ${w.n}"></div>
+    <div class="wmeta"><span class="wn">${w.n}</span><span class="badge ${w.b[0]}">${w.b[1]}</span></div>`;
+  wt.appendChild(el);
 });
 
 /* ---------- NAV ---------- */
@@ -584,7 +556,6 @@ const dots=document.getElementById('dots');
 let cur=0;
 slides.forEach((s,i)=>{const d=document.createElement('div');d.className='dot-n'+(i?'':' on');d.onclick=()=>go(i);dots.appendChild(d);});
 const dotEls=[...dots.children];
-const charts={};
 
 function go(i){
   if(i<0||i>=slides.length)return;
@@ -606,71 +577,13 @@ document.addEventListener('keydown',e=>{
 
 /* ---------- ACTIVATE EFFECTS ---------- */
 function activate(sl){
-  // counters
   sl.querySelectorAll('.num[data-count]').forEach(el=>{
     if(el.dataset.done)return;el.dataset.done=1;
     const end=+el.dataset.count,suf=el.dataset.suffix||'';let t0=null,dur=1100;
+    const fmt=n=>n.toLocaleString('es-PY');
     const step=ts=>{if(!t0)t0=ts;const p=Math.min((ts-t0)/dur,1);const e=1-Math.pow(1-p,3);
-      el.textContent=Math.round(end*e)+suf;if(p<1)requestAnimationFrame(step);};
+      el.textContent=fmt(Math.round(end*e))+suf;if(p<1)requestAnimationFrame(step);};
     requestAnimationFrame(step);
-  });
-  // progress bars
-  setTimeout(()=>sl.querySelectorAll('.pbar i[data-w],.bbar i[data-w]').forEach(b=>{b.style.width=b.dataset.w+'%';}),250);
-  // charts
-  if(sl.querySelector('#donut')&&!charts.donut)buildDonut();
-  if(sl.querySelector('#areas')&&!charts.areas)buildAreas();
-  if(sl.querySelector('#line')&&!charts.line)buildLine();
-}
-
-/* ---------- CHARTS ---------- */
-Chart.defaults.color='#94A3B8';
-Chart.defaults.font.family="'Inter',sans-serif";
-Chart.defaults.font.size=12;
-
-function buildDonut(){
-  charts.donut=new Chart(document.getElementById('donut'),{
-    type:'doughnut',
-    data:{labels:['Completado','En curso','Sin iniciar','Recurrente'],
-      datasets:[{data:[3,7,1,2],backgroundColor:['#22C55E','#F59E0B','#64748B','#8B5CF6'],
-        borderColor:'#0f1a30',borderWidth:3,hoverOffset:8}]},
-    options:{cutout:'62%',plugins:{legend:{position:'right',labels:{padding:16,usePointStyle:true,pointStyle:'circle',boxWidth:9,font:{size:13}}},
-      tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed} proyectos`}}},
-      animation:{animateScale:true,duration:900}}
-  });
-}
-function buildAreas(){
-  charts.areas=new Chart(document.getElementById('areas'),{
-    type:'bar',
-    data:{labels:['Comercial','Marketing','Post Venta','Admin & Fin.'],
-      datasets:[{label:'Proyectos',data:[6,5,2,1],
-        backgroundColor:['#38BDF8','#22C55E','#8B5CF6','#F59E0B'],borderRadius:8,barThickness:38}]},
-    options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.x} proyectos`}}},
-      scales:{x:{grid:{color:'rgba(148,163,184,.1)'},ticks:{stepSize:2},border:{display:false}},
-        y:{grid:{display:false},border:{display:false},ticks:{font:{size:13,weight:'600'},color:'#F8FAFC'}}},
-      animation:{duration:900}}
-  });
-}
-function buildLine(){
-  const labels=['06 abr','28 abr','29 may','Hoy'];
-  const mk=(n,c,data,dash)=>({label:n,data,borderColor:c,backgroundColor:c+'22',
-    borderWidth:3,tension:.4,pointRadius:4,pointHoverRadius:6,pointBackgroundColor:c,
-    pointBorderColor:'#0f1a30',pointBorderWidth:2,borderDash:dash||[],fill:false});
-  charts.line=new Chart(document.getElementById('line'),{
-    type:'line',
-    data:{labels,datasets:[
-      mk('App Subasta','#22C55E',[50,70,95,100]),
-      mk('Agente de Ventas','#38BDF8',[80,90,100,100]),
-      mk('Dashboard Meta Ads','#8B5CF6',[50,80,100,100]),
-      mk('Ycloud Masiva','#F59E0B',[null,null,85,90]),
-      mk('Dashboard PDI','#06B6D4',[null,null,80,95]),
-      mk('Importaciones','#F472B6',[10,10,20,40]),
-    ]},
-    options:{spanGaps:true,interaction:{mode:'index',intersect:false},
-      plugins:{legend:{position:'top',align:'start',labels:{usePointStyle:true,pointStyle:'circle',boxWidth:8,padding:18,font:{size:12.5}}},
-        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}%`}}},
-      scales:{y:{min:0,max:105,grid:{color:'rgba(148,163,184,.1)'},border:{display:false},ticks:{callback:v=>v+'%',stepSize:25}},
-        x:{grid:{display:false},border:{color:'rgba(148,163,184,.2)'},ticks:{font:{size:13,weight:'600'},color:'#CBD5E1'}}},
-      animation:{duration:1200,easing:'easeOutQuart'}}
   });
 }
 
