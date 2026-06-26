@@ -255,6 +255,34 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
 .hero.hero .cine .bar.bot{animation-name:barInBot}
 @keyframes barInBot{0%{transform:scaleY(-2.4)}100%{transform:scaleY(-1)}}
 @media (prefers-reduced-motion:reduce){.hero .cine .aurora,.hero .cine .grain{animation:none}}
+
+/* YCloud dashboard mock */
+.ycloud{background:#f7f5fc;font-size:11px;color:#1e1b2e;padding:14px;display:flex;flex-direction:column;gap:12px}
+.yc-hero{background:linear-gradient(135deg,#efe9fd,#f6f1ff);border:1px solid #e6def7;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:11px}
+.yc-welcome{font-size:15px;font-weight:500;color:#241f38}
+.yc-welcome b{font-weight:800}
+.yc-card{background:#fff;border:1px solid #ece6f7;border-radius:10px;padding:11px 13px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.yc-co{display:flex;align-items:center;gap:10px}
+.yc-logo{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+.yc-co-name{font-weight:700;font-size:13px}
+.yc-co-id{color:#8b86a0;font-size:9.5px}
+.yc-wallet{display:flex;align-items:center;gap:12px}
+.yc-w-lab{color:#8b86a0;font-size:9.5px;text-align:right}
+.yc-w-val{font-weight:800;font-size:13px}
+.yc-btn{background:linear-gradient(135deg,#7c3aed,#9333ea);color:#fff;font-weight:700;font-size:10.5px;padding:7px 14px;border-radius:8px;white-space:nowrap}
+.yc-plan{background:#fff;border:1px solid #ece6f7;border-radius:10px;padding:11px 13px;display:flex;justify-content:space-between;align-items:center}
+.yc-plan span:first-child{font-weight:600;font-size:12px}
+.yc-free{background:#e8fbf0;color:#16a34a;font-weight:700;padding:2px 8px;border-radius:6px;font-size:10px;margin-left:4px}
+.yc-guide{background:#fff;border:1px solid #ece6f7;border-radius:12px;padding:13px;display:flex;flex-direction:column;gap:10px}
+.yc-g-head{display:flex;align-items:center;gap:8px;font-weight:800;font-size:12.5px;color:#241f38;background:#f3eefc;margin:-13px -13px 2px;padding:11px 13px;border-radius:12px 12px 0 0}
+.yc-g-ic{width:24px;height:24px;border-radius:7px;background:#ede5fb;display:flex;align-items:center;justify-content:center;font-size:13px}
+.yc-step{display:flex;align-items:center;gap:11px}
+.yc-step>div{flex:1;display:flex;flex-direction:column;line-height:1.3}
+.yc-step b{font-size:12px;font-weight:700}
+.yc-step span:not(.yc-n):not(.yc-do){color:#8b86a0;font-size:10px}
+.yc-n{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;background:#ede9f5;color:#a59fc0;flex:0 0 auto}
+.yc-n.on{background:#7c3aed;color:#fff}
+.yc-do{border:1px solid #d9d2ec;color:#5b5470;font-weight:700;font-size:10.5px;padding:6px 16px;border-radius:8px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -389,7 +417,24 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
             <div class="s r d6"><div class="v" style="color:#8B5CF6">WhatsApp</div><div class="l">Canal directo al cliente</div></div>
           </div>
         </div>
-        <div class="browser r d3"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">mensajería · NPS WhatsApp</span></div><img src="assets/nps-whatsapp.png" alt="Plataforma de mensajería para NPS por WhatsApp" onerror="this.closest('.browser').classList.add('noimg')"></div>
+        <div class="browser r d3"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">app.ycloud.com · NPS WhatsApp</span></div>
+          <div class="ycloud">
+            <div class="yc-hero">
+              <div class="yc-welcome">👋 ¡Bienvenido, <b>Carlos Roman!</b></div>
+              <div class="yc-card">
+                <div class="yc-co"><span class="yc-logo">SR</span><div><div class="yc-co-name">Santa Rosa</div><div class="yc-co-id">ID empresa · 69dfb2e0…60de5e</div></div></div>
+                <div class="yc-wallet"><div><div class="yc-w-lab">Cartera</div><div class="yc-w-val">0.5 USD</div></div><span class="yc-btn">Recargar</span></div>
+              </div>
+              <div class="yc-plan"><span>Planificación: <b class="yc-free">Free</b></span><span class="yc-btn">Mejorar</span></div>
+            </div>
+            <div class="yc-guide">
+              <div class="yc-g-head"><span class="yc-g-ic">📣</span> Campaña de marketing · WhatsApp</div>
+              <div class="yc-step"><span class="yc-n on">1</span><div><b>Crear plantilla de WhatsApp</b><span>Diseña y envía tu plantilla para aprobación de Meta</span></div><span class="yc-do">Crear</span></div>
+              <div class="yc-step"><span class="yc-n">2</span><div><b>Crear transmisión NPS</b><span>Selecciona clientes y envía la encuesta de satisfacción</span></div><span class="yc-do">Crear</span></div>
+              <div class="yc-step"><span class="yc-n">3</span><div><b>Ver estadísticas</b><span>Analiza respuestas y puntaje NPS de los clientes</span></div><span class="yc-do">Vista</span></div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> NPS por WhatsApp · sin costo</div><div class="pageno"><b>05</b> / 12</div></div>
     </section>
