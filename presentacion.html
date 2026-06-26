@@ -210,6 +210,26 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
 .hint kbd{font-family:'JetBrains Mono';background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:5px;padding:2px 7px;font-size:10px}
 
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:opacity .2s ease!important}}
+
+/* ---------- MOBILE ---------- */
+.rotate-tip{display:none}
+@media (max-width:760px){
+  .hint{font-size:9px;top:10px;right:10px;gap:5px}
+  .hint kbd{padding:1px 5px;font-size:9px}
+  .nav{bottom:14px;gap:9px;padding:7px 11px}
+  .nav button{width:34px;height:34px}
+  .dots{gap:7px}
+}
+@media (max-width:760px) and (orientation:portrait){
+  #deck{align-items:flex-start;padding-top:14vh}
+  .rotate-tip{display:flex;position:fixed;left:50%;bottom:84px;transform:translateX(-50%);z-index:60;
+    align-items:center;gap:9px;background:rgba(10,17,36,.92);backdrop-filter:blur(10px);
+    border:1px solid var(--border);border-radius:999px;padding:9px 16px;font-size:12px;color:var(--muted);
+    animation:tipPulse 2.4s ease-in-out infinite}
+  .rotate-tip svg{color:var(--accent2);animation:tipRot 2.4s ease-in-out infinite}
+}
+@keyframes tipPulse{0%,100%{opacity:.85}50%{opacity:1}}
+@keyframes tipRot{0%,60%,100%{transform:rotate(0)}80%{transform:rotate(90deg)}}
 </style>
 </head>
 <body>
@@ -495,6 +515,7 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
 </div>
 
 <div class="hint"><kbd>←</kbd><kbd>→</kbd> navegar · <kbd>F</kbd> pantalla completa</div>
+<div class="rotate-tip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>Girá el teléfono para verlo mejor</div>
 <div class="nav">
   <button id="prev" aria-label="Anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg></button>
   <div class="dots" id="dots"></div>
@@ -590,7 +611,9 @@ function activate(sl){
 
 /* ---------- SCALE 16:9 ---------- */
 function fit(){
-  const s=Math.min(window.innerWidth/1280,window.innerHeight/720)*0.94;
+  const vw=window.innerWidth,vh=window.innerHeight;
+  const pad=vw<760?0.99:0.94;
+  const s=Math.min(vw/1280,vh/720)*pad;
   document.getElementById('stage').style.transform=`scale(${s})`;
 }
 window.addEventListener('resize',fit);fit();
