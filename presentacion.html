@@ -36,10 +36,10 @@ html,body{height:100%;background:#05080f;color:var(--fg);font-family:'Inter',sys
 
 /* ---------- SLIDES ---------- */
 .slide{position:absolute;inset:0;padding:48px 60px;opacity:0;visibility:hidden;
-  transform:translateY(28px) scale(.985);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1),visibility .55s;
+  transform:translateY(40px) scale(.96);filter:blur(14px);transition:opacity .7s ease,transform .7s cubic-bezier(.16,.84,.24,1),filter .7s ease,visibility .7s;
   display:flex;flex-direction:column}
-.slide.active{opacity:1;visibility:visible;transform:none}
-.slide.prev{transform:translateY(-28px) scale(.985)}
+.slide.active{opacity:1;visibility:visible;transform:none;filter:blur(0)}
+.slide.prev{transform:translateY(-40px) scale(.96);filter:blur(14px)}
 
 /* reveal */
 .r{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
@@ -230,6 +230,31 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
 }
 @keyframes tipPulse{0%,100%{opacity:.85}50%{opacity:1}}
 @keyframes tipRot{0%,60%,100%{transform:rotate(0)}80%{transform:rotate(90deg)}}
+
+/* cinematic hero backdrop */
+.hero{position:relative;overflow:hidden}
+.hero .cine{position:absolute;inset:0;z-index:0;pointer-events:none}
+.hero .cine .aurora{position:absolute;inset:-30%;background:
+  radial-gradient(40% 50% at 22% 30%,rgba(34,197,94,.20),transparent 60%),
+  radial-gradient(45% 55% at 78% 65%,rgba(56,189,248,.18),transparent 60%),
+  radial-gradient(40% 45% at 60% 18%,rgba(139,92,246,.16),transparent 60%);
+  filter:blur(30px);animation:auroraDrift 18s ease-in-out infinite alternate}
+.hero .cine .vignette{position:absolute;inset:0;background:radial-gradient(120% 100% at 50% 38%,transparent 45%,rgba(7,12,24,.55) 100%)}
+.hero .cine .grain{position:absolute;inset:0;opacity:.06;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grainShift 1.2s steps(3) infinite}
+.hero .cine .bar{position:absolute;left:0;right:0;height:42px;background:linear-gradient(rgba(7,12,24,.85),transparent);z-index:1}
+.hero .cine .bar.top{top:0;animation:barIn .9s cubic-bezier(.16,.84,.24,1) both}
+.hero .cine .bar.bot{bottom:0;transform:scaleY(-1);animation:barIn .9s cubic-bezier(.16,.84,.24,1) both}
+.hero .hero-grid{position:relative;z-index:2}
+.hero .hero-grid>div:first-child{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.hero .robot-wrap{transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes auroraDrift{0%{transform:translate3d(-3%,-2%,0) scale(1)}100%{transform:translate3d(3%,2%,0) scale(1.12)}}
+@keyframes grainShift{0%{transform:translate(0,0)}33%{transform:translate(-4%,3%)}66%{transform:translate(3%,-2%)}100%{transform:translate(0,0)}}
+@keyframes barIn{0%{transform:scaleY(2.4)}100%{transform:scaleY(1)}}
+.hero.hero .cine .bar.bot{animation-name:barInBot}
+@keyframes barInBot{0%{transform:scaleY(-2.4)}100%{transform:scaleY(-1)}}
+@media (prefers-reduced-motion:reduce){.hero .cine .aurora,.hero .cine .grain{animation:none}}
 </style>
 </head>
 <body>
@@ -239,6 +264,7 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
 
     <!-- ===== SLIDE 1 · PORTADA ===== -->
     <section class="slide hero active" data-name="Portada">
+      <div class="cine"><div class="aurora"></div><div class="grain"></div><div class="vignette"></div><div class="bar top"></div><div class="bar bot"></div></div>
       <div class="hero-grid">
         <div>
           <span class="eyebrow r">● Productos desarrollados · 2026</span>
@@ -648,6 +674,26 @@ function fit(){
 window.addEventListener('resize',fit);fit();
 activate(slides[0]);
 document.getElementById('prog').style.width=(1/slides.length*100)+'%';
+
+/* ---------- CINEMATIC PARALLAX (cover) ---------- */
+(function(){
+  const hero=document.querySelector('.slide.hero');if(!hero)return;
+  const txt=hero.querySelector('.hero-grid>div:first-child');
+  const robot=hero.querySelector('.robot-wrap');
+  const aur=hero.querySelector('.cine .aurora');
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  let tx=0,ty=0,cx=0,cy=0,raf=0;
+  function loop(){cx+=(tx-cx)*.08;cy+=(ty-cy)*.08;
+    if(txt)txt.style.transform=`translate3d(${cx*-10}px,${cy*-8}px,0)`;
+    if(robot)robot.style.transform=`translate3d(${cx*22}px,${cy*16}px,0)`;
+    if(aur)aur.style.translate=`${cx*-18}px ${cy*-14}px`;
+    if(Math.abs(tx-cx)>.001||Math.abs(ty-cy)>.001)raf=requestAnimationFrame(loop);else raf=0;}
+  window.addEventListener('pointermove',e=>{
+    if(!hero.classList.contains('active'))return;
+    tx=(e.clientX/window.innerWidth-.5)*2;ty=(e.clientY/window.innerHeight-.5)*2;
+    if(!raf)raf=requestAnimationFrame(loop);
+  });
+})();
 </script>
 </body>
 </html>
