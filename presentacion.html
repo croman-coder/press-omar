@@ -6,208 +6,219 @@
 <title>Productos Desarrollados · Santa Rosa Paraguay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js"></script>
 <style>
 :root{
-  --bg:#0F172A; --bg2:#0B1220; --primary:#1E293B; --secondary:#334155;
-  --accent:#22C55E; --accent2:#38BDF8; --amber:#F59E0B; --violet:#8B5CF6;
-  --fg:#F8FAFC; --muted:#94A3B8; --muted2:#64748B; --border:#1f2c44;
-  --danger:#EF4444; --card:#131e36; --card2:#0f1a30;
+  --bg:#0a0c0b; --bg2:#070908; --panel:#0e1210; --panel2:#0b0f0d;
+  --ink:#E9ECE6; --mut:#8b958c; --dim:#586059;
+  --line:#1a201c; --line2:#283129;
+  --ok:#5cf2a0; --ok-dim:#13261c; --warn:#ffb454; --warn-dim:#2c2413; --danger:#ff6b6b;
+  --font-display:'Archivo',system-ui,sans-serif;
+  --font-body:'IBM Plex Sans',system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,monospace;
   --w:1280px; --h:720px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;background:#05080f;color:var(--fg);font-family:'Inter',system-ui,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased}
-.num{font-variant-numeric:tabular-nums}
-.mono{font-family:'JetBrains Mono',monospace}
+html,body{height:100%;background:var(--bg2);color:var(--ink);font-family:var(--font-body);overflow:hidden;-webkit-font-smoothing:antialiased}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.mono{font-family:var(--font-mono)}
 
 /* ---------- STAGE / 16:9 ---------- */
-#deck{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(1200px 800px at 70% -10%,#0d1b33 0%,#05080f 60%)}
+#deck{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:
+  radial-gradient(1100px 700px at 80% -20%,#0d1512 0%,#070908 62%)}
 .stage{position:relative;width:var(--w);height:var(--h);transform-origin:center center;
-  background:linear-gradient(160deg,#0e1830 0%,#0a1124 55%,#070d1c 100%);
-  border:1px solid var(--border);border-radius:18px;overflow:hidden;
-  box-shadow:0 40px 120px -20px rgba(0,0,0,.8),0 0 0 1px rgba(56,189,248,.04)}
-.stage::before{content:"";position:absolute;inset:0;
-  background-image:linear-gradient(rgba(56,189,248,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.045) 1px,transparent 1px);
-  background-size:48px 48px;mask-image:radial-gradient(900px 600px at 75% 0%,#000 0%,transparent 75%);pointer-events:none}
-.stage::after{content:"";position:absolute;top:-180px;right:-160px;width:520px;height:520px;border-radius:50%;
-  background:radial-gradient(circle,rgba(34,197,94,.18),transparent 65%);filter:blur(20px);pointer-events:none}
+  background:var(--bg);border:1px solid var(--line2);border-radius:6px;overflow:hidden;
+  box-shadow:0 40px 120px -24px rgba(0,0,0,.85),inset 0 0 0 1px rgba(92,242,160,.02)}
+/* fine blueprint grid */
+.stage::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:34px 34px;opacity:.55;
+  -webkit-mask-image:radial-gradient(130% 95% at 50% -5%,#000 32%,transparent 92%);
+          mask-image:radial-gradient(130% 95% at 50% -5%,#000 32%,transparent 92%)}
+/* instrument corner ticks on the stage */
+.stage::after{content:"";position:absolute;inset:14px;pointer-events:none;z-index:1;
+  background:
+   linear-gradient(var(--line2),var(--line2)) left 0 top 0/14px 1px no-repeat,
+   linear-gradient(var(--line2),var(--line2)) left 0 top 0/1px 14px no-repeat,
+   linear-gradient(var(--line2),var(--line2)) right 0 bottom 0/14px 1px no-repeat,
+   linear-gradient(var(--line2),var(--line2)) right 0 bottom 0/1px 14px no-repeat;opacity:.6}
 
 /* ---------- SLIDES ---------- */
-.slide{position:absolute;inset:0;padding:48px 60px;opacity:0;visibility:hidden;
-  transform:translateY(40px) scale(.96);filter:blur(14px);transition:opacity .7s ease,transform .7s cubic-bezier(.16,.84,.24,1),filter .7s ease,visibility .7s;
-  display:flex;flex-direction:column}
-.slide.active{opacity:1;visibility:visible;transform:none;filter:blur(0)}
-.slide.prev{transform:translateY(-40px) scale(.96);filter:blur(14px)}
+.slide{position:absolute;inset:0;padding:46px 58px;opacity:0;visibility:hidden;
+  transform:translateY(26px);transition:opacity .55s ease,transform .6s cubic-bezier(.16,.84,.24,1),visibility .6s;
+  display:flex;flex-direction:column;z-index:2}
+.slide.active{opacity:1;visibility:visible;transform:none}
+.slide.prev{transform:translateY(-22px)}
 
 /* reveal */
-.r{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.r{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
 .active .r{opacity:1;transform:none}
-.active .r:nth-child(1){transition-delay:.08s}
-.d1{transition-delay:.12s!important}.d2{transition-delay:.20s!important}.d3{transition-delay:.28s!important}
-.d4{transition-delay:.36s!important}.d5{transition-delay:.44s!important}.d6{transition-delay:.52s!important}
-.d7{transition-delay:.60s!important}.d8{transition-delay:.68s!important}.d9{transition-delay:.76s!important}
+.active .r:nth-child(1){transition-delay:.06s}
+.d1{transition-delay:.10s!important}.d2{transition-delay:.17s!important}.d3{transition-delay:.24s!important}
+.d4{transition-delay:.31s!important}.d5{transition-delay:.38s!important}.d6{transition-delay:.45s!important}
+.d7{transition-delay:.52s!important}.d8{transition-delay:.59s!important}.d9{transition-delay:.66s!important}
 
 /* ---------- TYPO ---------- */
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
-  background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);padding:6px 14px;border-radius:999px}
-.eyebrow.cy{color:var(--accent2);background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.25)}
-.eyebrow.am{color:var(--amber);background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25)}
-.eyebrow.vi{color:var(--violet);background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.25)}
-h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;margin-top:14px}
-.title .hl{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.subtitle{color:var(--muted);font-size:15.5px;font-weight:400;margin-top:10px;max-width:760px;line-height:1.55}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);font-size:11px;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--mut)}
+.eyebrow::before{content:"";width:8px;height:8px;background:var(--ok);box-shadow:0 0 9px var(--ok);flex:none}
+.eyebrow.am::before{background:var(--warn);box-shadow:0 0 9px var(--warn)}
+h2.title{font-family:var(--font-display);font-size:37px;font-weight:800;letter-spacing:-.025em;line-height:1.04;margin-top:15px;color:var(--ink)}
+.title .hl{color:var(--ok)}
+.subtitle{color:var(--mut);font-size:15px;font-weight:400;margin-top:11px;max-width:760px;line-height:1.6}
+.subtitle b,.feat b{color:var(--ink);font-weight:600}
 .shead{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px}
 
 /* ---------- HERO ---------- */
 .hero{align-items:flex-start;justify-content:center}
-.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;width:100%;align-items:center}
-.hero h1{font-size:56px;font-weight:900;letter-spacing:-.03em;line-height:1.0;margin:18px 0 0}
-.hero h1 .hl{background:linear-gradient(90deg,#22C55E,#38BDF8 60%,#8B5CF6);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p.lead{color:var(--muted);font-size:17px;margin-top:20px;max-width:520px;line-height:1.6}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:46px;width:100%;align-items:center;position:relative;z-index:2}
+.hero h1{font-family:var(--font-display);font-size:60px;font-weight:900;letter-spacing:-.035em;line-height:.98;margin:18px 0 0;color:var(--ink)}
+.hero h1 .hl{color:var(--ok)}
+.hero p.lead{color:var(--mut);font-size:16.5px;margin-top:22px;max-width:520px;line-height:1.62}
 .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
-.chip{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:12px 16px}
-.chip .k{font-size:22px;font-weight:800;color:var(--fg)}
-.chip .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-.byline{display:flex;align-items:center;gap:14px;margin-top:34px;color:var(--muted);font-size:14px}
-.byline .av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#22C55E,#38BDF8);display:flex;align-items:center;justify-content:center;font-weight:800;color:#04210f}
-.byline b{color:var(--fg)}
+.chip{display:flex;align-items:center;gap:13px;background:var(--panel);border:1px solid var(--line2);border-radius:5px;padding:14px 18px;position:relative}
+.chip::before{content:"";position:absolute;top:7px;left:7px;width:7px;height:7px;border-top:1px solid var(--ok);border-left:1px solid var(--ok)}
+.chip .k{font-family:var(--font-display);font-size:26px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+.chip .l{font-family:var(--font-mono);font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.12em;line-height:1.35}
 
-/* robot */
-.robot-wrap{position:relative;display:flex;align-items:center;justify-content:center;height:440px}
-.robot-glow{position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,.22),transparent 60%);filter:blur(10px);animation:pulseGlow 4s ease-in-out infinite}
-.ring{position:absolute;border:1px solid rgba(56,189,248,.16);border-radius:50%}
+/* ---------- HERO ROBOT (Spline) ---------- */
+.hero-viz{position:relative;z-index:2}
+.robot-wrap{position:relative;display:flex;align-items:center;justify-content:center;height:432px}
+.robot-glow{position:absolute;width:330px;height:330px;border-radius:50%;
+  background:radial-gradient(circle,rgba(92,242,160,.16),transparent 62%);filter:blur(12px);animation:pulseGlow 4s ease-in-out infinite}
+.ring{position:absolute;border:1px solid rgba(92,242,160,.16);border-radius:50%}
 .ring.r1{width:300px;height:300px;animation:spin 18s linear infinite}
-.ring.r2{width:380px;height:380px;border-style:dashed;border-color:rgba(34,197,94,.18);animation:spin 26s linear infinite reverse}
-.ring .dot{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--accent);top:-5px;left:50%;margin-left:-5px;box-shadow:0 0 14px var(--accent)}
-.ring.r2 .dot{background:var(--accent2);box-shadow:0 0 14px var(--accent2)}
-.robot{position:relative;width:230px;animation:bob 5s ease-in-out infinite;filter:drop-shadow(0 18px 30px rgba(0,0,0,.55))}
-.robot-spline{position:relative;z-index:2;width:115%;height:115%;background:transparent}
-.eye{transform-origin:center;animation:blink 4.5s infinite}
-.antenna-dot{animation:pulseDot 1.6s ease-in-out infinite}
-.scan{animation:scan 3s ease-in-out infinite}
-
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.ring.r2{width:382px;height:382px;border-style:dashed;border-color:rgba(92,242,160,.13);animation:spin 26s linear infinite reverse}
+.ring .dot{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--ok);top:-5px;left:50%;margin-left:-4.5px;box-shadow:0 0 12px var(--ok)}
+.robot-spline{position:relative;z-index:2;width:108%;height:108%;background:transparent}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes pulseGlow{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
-@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.3}}
-@keyframes blink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
-@keyframes scan{0%,100%{transform:translateY(0);opacity:.2}50%{transform:translateY(26px);opacity:.9}}
+@keyframes pulseGlow{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.07)}}
 
 /* ---------- KPI CARDS ---------- */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.kpi{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:16px;padding:22px;position:relative;overflow:hidden}
-.kpi::after{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:var(--accent)}
-.kpi.cy::after{background:var(--accent2)}.kpi.am::after{background:var(--amber)}.kpi.vi::after{background:var(--violet)}
-.kpi .v{font-size:44px;font-weight:900;letter-spacing:-.03em;line-height:1}
-.kpi .u{font-size:20px;font-weight:700;color:var(--muted);margin-left:2px}
-.kpi .lab{margin-top:8px;color:var(--muted);font-size:13px;font-weight:500}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.kpi{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:22px;overflow:hidden}
+.kpi::before{content:"";position:absolute;top:10px;left:10px;width:9px;height:9px;border-top:1px solid var(--ok);border-left:1px solid var(--ok)}
+.kpi.am::before{border-color:var(--warn)}
+.kpi::after{content:"";position:absolute;bottom:10px;right:10px;width:9px;height:9px;border-bottom:1px solid var(--line2);border-right:1px solid var(--line2)}
+.kpi .v{font-family:var(--font-display);font-size:46px;font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--ink)}
+.kpi .u{font-size:20px;font-weight:700;color:var(--mut);margin-left:2px}
+.kpi .lab{margin-top:9px;color:var(--mut);font-size:12.5px;font-weight:400;font-family:var(--font-mono);line-height:1.4}
 
 /* ---------- PRODUCT TILES (overview) ---------- */
-.ptiles{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;align-content:start}
-.ptile{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:14px;padding:16px 16px;display:flex;flex-direction:column;gap:9px;
-  transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .25s}
-.ptile:hover{transform:translateY(-4px);border-color:var(--secondary)}
-.ptile .ic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:rgba(56,189,248,.1);color:var(--accent2)}
-.ptile .tn{font-size:13.5px;font-weight:700;line-height:1.25}
-.ptile .td{font-size:11px;color:var(--muted);line-height:1.4;flex:1}
+.ptiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-content:start}
+.ptile{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:16px;display:flex;flex-direction:column;gap:9px;
+  transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .25s}
+.ptile:hover{transform:translateY(-3px);border-color:var(--line2)}
+.ptile .ic{width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;background:var(--panel2);border:1px solid var(--line2);color:var(--ok)}
+.ptile .tn{font-size:13.5px;font-weight:600;line-height:1.25;color:var(--ink)}
+.ptile .td{font-size:11px;color:var(--mut);line-height:1.45;flex:1;font-family:var(--font-mono)}
 .ptile .badge{align-self:flex-start}
 
 /* ---------- PRODUCT SHOWCASE ---------- */
 .prod-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:36px;flex:1;min-height:0;align-items:center}
 .prod-grid.rev{grid-template-columns:1.18fr .82fr}
-.badge{font-size:10px;font-weight:700;padding:4px 10px;border-radius:7px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
-.b-done{color:var(--accent);background:rgba(34,197,94,.12)}
-.b-ready{color:var(--accent2);background:rgba(56,189,248,.12)}
-.b-prog{color:var(--amber);background:rgba(245,158,11,.12)}
-.b-soon{color:var(--violet);background:rgba(139,92,246,.13)}
+.badge{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.08em;padding:4px 9px;border-radius:4px;
+  white-space:nowrap;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2)}
+.b-done,.b-ready{color:var(--ok)}
+.b-done::first-letter,.b-ready::first-letter{color:var(--ok)}
+.b-prog,.b-soon{color:var(--warn)}
 .feat{display:flex;flex-direction:column;gap:11px;margin-top:18px}
-.feat .it{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;line-height:1.45}
-.feat .it .ck{color:var(--accent);flex:none;margin-top:2px}
-.feat .it b{color:var(--fg);font-weight:600}
-.feat .it span{color:var(--muted)}
-.statline{display:flex;gap:22px;margin-top:22px;flex-wrap:wrap}
-.statline .s .v{font-size:24px;font-weight:900;letter-spacing:-.02em}
-.statline .s .l{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.feat .it{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;line-height:1.5}
+.feat .it .ck{color:var(--ok);flex:none;margin-top:2px}
+.feat .it span{color:var(--mut)}
+.feat .it code{font-family:var(--font-mono);color:var(--ok);font-size:12.5px}
+.statline{display:flex;gap:30px;margin-top:24px;flex-wrap:wrap}
+.statline .s{position:relative;padding-top:12px}
+.statline .s::before{content:"";position:absolute;left:0;top:0;width:18px;height:2px;background:var(--ok)}
+.statline .s .v{font-family:var(--font-display);font-size:25px;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+.statline .s .l{font-family:var(--font-mono);font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.1em;margin-top:3px}
 
-/* browser mockup */
-.browser{background:#0b1424;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 32px 70px -22px rgba(0,0,0,.75);width:100%}
-.browser .bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:#0e1830;border-bottom:1px solid var(--border)}
-.browser .bar i{width:11px;height:11px;border-radius:50%}
-.browser .bar .u{flex:1;margin-left:12px;font-size:11px;color:var(--muted2);font-family:'JetBrains Mono';background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;padding:5px 11px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.browser img{display:block;width:100%;height:auto;max-height:452px;object-fit:cover;object-position:top center;background:#0b1424}
+/* ---------- CONSOLE FRAME (was browser mockup) ---------- */
+.browser{position:relative;background:var(--panel2);border:1px solid var(--line2);border-radius:5px;overflow:hidden;
+  box-shadow:0 30px 64px -26px rgba(0,0,0,.8);width:100%}
+.browser::before,.browser::after{content:"";position:absolute;width:9px;height:9px;border:1px solid var(--ok);opacity:.4;z-index:3;pointer-events:none}
+.browser::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.browser::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.browser .bar{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--panel);border-bottom:1px solid var(--line)}
+.browser .bar::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);flex:none}
+.browser .bar i{display:none}
+.browser .bar .u{flex:1;font-size:11px;color:var(--mut);font-family:var(--font-mono);letter-spacing:.02em;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.browser .bar::after{content:"LIVE";font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.18em;color:var(--ok);opacity:.7}
+.browser img{display:block;width:100%;height:auto;max-height:452px;object-fit:cover;object-position:top center;background:var(--panel2)}
 .shots{display:grid;gap:14px}
 .shots.two{grid-template-columns:1fr 1fr;align-items:start}
-.shots.two .browser img{max-height:300px}
+.shots.two>.browser img{max-height:300px}
 .shots .stack{display:grid;gap:14px}
 .shots .stack .browser img{max-height:150px}
-.webgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-content:start}
-.webgrid .browser img{max-height:188px}
+/* subastas: login enlarged + featured */
+.shots.subastas{display:grid;gap:14px}
+.shots.subastas>.browser img{max-height:212px}
+.shots.subastas .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.shots.subastas .row2 .browser img{max-height:204px;object-position:center}
+.webgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;align-content:start}
+.webgrid .browser img{max-height:150px}
 .webcard{display:flex;flex-direction:column;gap:9px}
 .webcard .wmeta{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 2px}
-.webcard .wn{font-size:14px;font-weight:600;color:#fff;letter-spacing:-.01em}
-/* 3D scroll-style tilt entrance on screenshots */
+.webcard .wn{font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+/* entrance tilt on frames */
 .prod-grid,.shots,.webgrid{perspective:1600px}
 .browser{transform-origin:50% 100%}
-.active .browser{animation:tilt3d .85s cubic-bezier(.2,.8,.2,1) both}
-.active .shots.two .browser:nth-child(2){animation-delay:.12s}
-.active .shots .stack .browser:nth-child(2){animation-delay:.18s}
+.active .browser{animation:tilt3d .8s cubic-bezier(.2,.8,.2,1) both}
+.active .shots.two .browser:nth-child(2){animation-delay:.1s}
+.active .shots.subastas .row2 .browser:nth-child(1){animation-delay:.1s}
+.active .shots.subastas .row2 .browser:nth-child(2){animation-delay:.18s}
 .active .webcard:nth-child(2) .browser{animation-delay:.07s}
 .active .webcard:nth-child(3) .browser{animation-delay:.14s}
 .active .webcard:nth-child(4) .browser{animation-delay:.21s}
 .active .webcard:nth-child(5) .browser{animation-delay:.28s}
 .active .webcard:nth-child(6) .browser{animation-delay:.35s}
-@keyframes tilt3d{0%{opacity:0;transform:rotateX(24deg) translateY(42px) scale(.94)}100%{opacity:1;transform:rotateX(0) translateY(0) scale(1)}}
+@keyframes tilt3d{0%{opacity:0;transform:rotateX(18deg) translateY(34px) scale(.96)}100%{opacity:1;transform:rotateX(0) translateY(0) scale(1)}}
 @media (prefers-reduced-motion:reduce){.active .browser{animation:none}}
 
 /* ---------- CLOSING ---------- */
-.close{align-items:center;justify-content:center;text-align:center}
-.close h2{font-size:50px;font-weight:900;letter-spacing:-.03em;line-height:1.05}
-.close h2 .hl{background:linear-gradient(90deg,#22C55E,#38BDF8);-webkit-background-clip:text;background-clip:text;color:transparent}
-.close p{color:var(--muted);font-size:18px;margin-top:18px;max-width:660px;line-height:1.6}
-.next-steps{display:flex;gap:16px;margin-top:36px}
-.ns{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:14px;padding:20px 24px;min-width:210px;text-align:left}
-.ns .n{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.ns .t{font-size:14px;color:var(--fg);line-height:1.4}
-.cta-glow{position:relative;display:inline-flex;align-items:center;gap:10px;margin-top:34px;padding:15px 30px;border-radius:999px;
-  font-size:15px;font-weight:700;letter-spacing:-.01em;color:#04210f;text-decoration:none;cursor:pointer;
-  background:linear-gradient(100deg,#22C55E,#38BDF8);box-shadow:0 10px 30px -8px rgba(34,197,94,.55);
-  transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s;overflow:hidden;z-index:1}
-.cta-glow::before{content:"";position:absolute;inset:0;border-radius:999px;padding:1px;
-  background:linear-gradient(100deg,rgba(255,255,255,.7),transparent 40%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.6}
-.cta-glow::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
-  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:shine 3.2s ease-in-out infinite;z-index:-1}
-.cta-glow:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 16px 40px -8px rgba(56,189,248,.6)}
+.close{align-items:flex-start;justify-content:center}
+.close .eyebrow{margin-bottom:4px}
+.close h2{font-family:var(--font-display);font-size:50px;font-weight:900;letter-spacing:-.03em;line-height:1.04;color:var(--ink);max-width:920px}
+.close h2 .hl{color:var(--ok)}
+.close>p{color:var(--mut);font-size:17px;margin-top:18px;max-width:720px;line-height:1.62}
+.next-steps{display:flex;gap:14px;margin-top:34px}
+.ns{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:18px 22px;min-width:220px;text-align:left}
+.ns::before{content:"";position:absolute;top:10px;left:10px;width:9px;height:9px;border-top:1px solid var(--ok);border-left:1px solid var(--ok)}
+.ns.dev::before{border-color:var(--warn)}
+.ns .n{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ok);margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.ns.dev .n{color:var(--warn)}
+.ns .t{font-size:13.5px;color:var(--ink);line-height:1.45}
+.cta-glow{position:relative;display:inline-flex;align-items:center;gap:11px;margin-top:34px;padding:15px 28px;border-radius:5px;
+  font-family:var(--font-mono);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#062013;text-decoration:none;cursor:pointer;
+  background:var(--ok);box-shadow:0 14px 38px -12px rgba(92,242,160,.5);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+.cta-glow:hover{transform:translateY(-2px);box-shadow:0 18px 46px -12px rgba(92,242,160,.6)}
 .cta-glow svg{transition:transform .3s}
 .cta-glow:hover svg{transform:translateX(4px)}
-@keyframes shine{0%{left:-120%}55%,100%{left:140%}}
 
 /* ---------- CHROME ---------- */
-#prog{position:absolute;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:width .5s ease;z-index:30;border-radius:0 3px 3px 0}
-.footer{position:absolute;bottom:20px;left:60px;right:60px;display:flex;align-items:center;justify-content:space-between;z-index:20}
-.fl{display:flex;align-items:center;gap:10px;font-size:11.5px;color:var(--muted2);letter-spacing:.04em}
-.fl .lg{font-weight:800;color:var(--fg);letter-spacing:.02em}
-.fl .lg span{color:var(--accent)}
-.pageno{font-size:12px;color:var(--muted2);font-family:'JetBrains Mono'}
-.pageno b{color:var(--fg)}
+#prog{position:absolute;top:0;left:0;height:2px;background:var(--ok);width:0;transition:width .5s ease;z-index:30;box-shadow:0 0 10px var(--ok)}
+.footer{position:absolute;bottom:18px;left:58px;right:58px;display:flex;align-items:center;justify-content:space-between;z-index:20}
+.fl{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:11px;color:var(--dim);letter-spacing:.06em;max-width:42%;min-width:0;overflow:hidden;white-space:nowrap}
+.fl .lg{font-family:var(--font-display);font-weight:800;color:var(--ink);letter-spacing:.01em}
+.fl .lg span{color:var(--ok)}
+.pageno{font-size:11px;color:var(--dim);font-family:var(--font-mono);letter-spacing:.1em}
+.pageno b{color:var(--ink)}
 
-.nav{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:50;
-  background:rgba(10,17,36,.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:999px;padding:9px 14px}
-.nav button{position:relative;width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--fg);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:transform .25s cubic-bezier(.2,.8,.2,1),background .25s,border-color .25s,box-shadow .25s;overflow:hidden}
-.nav button::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(34,197,94,.55),transparent 70%);opacity:0;transition:opacity .25s}
-.nav button:hover{background:var(--accent);color:#04210f;border-color:var(--accent);transform:translateY(-2px) scale(1.06);box-shadow:0 8px 22px -6px rgba(34,197,94,.6)}
-.nav button:hover::before{opacity:.4}
-.nav button:active{transform:translateY(0) scale(.96)}
-.nav button svg{position:relative;z-index:1}
-.nav button:focus-visible,.cta-glow:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
-.dots{display:flex;gap:9px;padding:0 6px}
-.dot-n{width:9px;height:9px;border-radius:50%;background:var(--secondary);cursor:pointer;transition:all .3s;border:none;padding:0}
-.dot-n.on{background:var(--accent);width:26px;border-radius:99px}
-.dot-n:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
-.hint{position:fixed;top:18px;right:22px;z-index:50;font-size:11px;color:var(--muted2);display:flex;align-items:center;gap:8px}
-.hint kbd{font-family:'JetBrains Mono';background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:5px;padding:2px 7px;font-size:10px}
+.nav{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:13px;z-index:50;
+  background:rgba(10,12,11,.9);border:1px solid var(--line2);border-radius:6px;padding:9px 13px}
+.nav button{width:36px;height:36px;border-radius:5px;border:1px solid var(--line2);background:var(--panel);color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:transform .22s cubic-bezier(.2,.8,.2,1),background .22s,border-color .22s,color .22s}
+.nav button:hover{background:var(--ok);color:#062013;border-color:var(--ok);transform:translateY(-2px)}
+.nav button:active{transform:translateY(0)}
+.nav button:focus-visible,.cta-glow:focus-visible{outline:2px solid var(--ok);outline-offset:3px}
+.dots{display:flex;gap:7px;padding:0 6px}
+.dot-n{width:8px;height:8px;border-radius:2px;background:var(--line2);cursor:pointer;transition:all .3s;border:none;padding:0}
+.dot-n.on{background:var(--ok);width:22px;box-shadow:0 0 8px var(--ok)}
+.dot-n:focus-visible{outline:2px solid var(--ok);outline-offset:3px}
+.hint{position:fixed;top:16px;right:20px;z-index:60;font-family:var(--font-mono);font-size:10px;color:var(--dim);display:flex;align-items:center;gap:8px;letter-spacing:.06em;background:rgba(8,9,8,.92);padding:5px 11px;border-radius:6px}
+.hint kbd{font-family:var(--font-mono);background:var(--panel);border:1px solid var(--line2);border-radius:4px;padding:2px 7px;font-size:10px;color:var(--mut)}
 
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:opacity .2s ease!important}}
 
@@ -218,49 +229,47 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
   .hint kbd{padding:1px 5px;font-size:9px}
   .nav{bottom:14px;gap:9px;padding:7px 11px}
   .nav button{width:34px;height:34px}
-  .dots{gap:7px}
+  .dots{gap:6px}
 }
 @media (max-width:760px) and (orientation:portrait){
   #deck{align-items:flex-start;padding-top:14vh}
   .rotate-tip{display:flex;position:fixed;left:50%;bottom:84px;transform:translateX(-50%);z-index:60;
-    align-items:center;gap:9px;background:rgba(10,17,36,.92);backdrop-filter:blur(10px);
-    border:1px solid var(--border);border-radius:999px;padding:9px 16px;font-size:12px;color:var(--muted);
+    align-items:center;gap:9px;background:rgba(10,12,11,.94);
+    border:1px solid var(--line2);border-radius:6px;padding:9px 16px;font-family:var(--font-mono);font-size:11px;color:var(--mut);
     animation:tipPulse 2.4s ease-in-out infinite}
-  .rotate-tip svg{color:var(--accent2);animation:tipRot 2.4s ease-in-out infinite}
+  .rotate-tip svg{color:var(--ok);animation:tipRot 2.4s ease-in-out infinite}
 }
 @keyframes tipPulse{0%,100%{opacity:.85}50%{opacity:1}}
 @keyframes tipRot{0%,60%,100%{transform:rotate(0)}80%{transform:rotate(90deg)}}
 
-/* cinematic backdrop (hero + close) */
+/* cinematic backdrop (hero + close) — calm technical, no glow blobs */
 .hero,.close{overflow:hidden}
 .cine{position:absolute;inset:0;z-index:0;pointer-events:none}
-.cine .aurora{position:absolute;inset:-30%;background:
-  radial-gradient(40% 50% at 22% 30%,rgba(34,197,94,.20),transparent 60%),
-  radial-gradient(45% 55% at 78% 65%,rgba(56,189,248,.18),transparent 60%),
-  radial-gradient(40% 45% at 60% 18%,rgba(139,92,246,.16),transparent 60%);
-  filter:blur(30px);animation:auroraDrift 18s ease-in-out infinite alternate}
-.cine .vignette{position:absolute;inset:0;background:radial-gradient(120% 100% at 50% 38%,transparent 45%,rgba(7,12,24,.55) 100%)}
-.cine .grain{position:absolute;inset:0;opacity:.06;mix-blend-mode:overlay;
+.cine .aurora{position:absolute;inset:0;
+  background:
+   radial-gradient(50% 60% at 78% 28%,rgba(92,242,160,.07),transparent 60%),
+   linear-gradient(rgba(26,32,28,.5) 1px,transparent 1px),
+   linear-gradient(90deg,rgba(26,32,28,.5) 1px,transparent 1px);
+  background-size:auto,40px 40px,40px 40px;
+  -webkit-mask-image:radial-gradient(120% 100% at 70% 30%,#000 25%,transparent 80%);
+          mask-image:radial-gradient(120% 100% at 70% 30%,#000 25%,transparent 80%);
+  animation:auroraDrift 20s ease-in-out infinite alternate}
+.cine .vignette{position:absolute;inset:0;background:radial-gradient(120% 100% at 50% 40%,transparent 48%,rgba(5,7,6,.6) 100%)}
+.cine .grain{position:absolute;inset:0;opacity:.05;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation:grainShift 1.2s steps(3) infinite}
-.cine .bar{position:absolute;left:0;right:0;height:42px;background:linear-gradient(rgba(7,12,24,.85),transparent);z-index:1}
-.cine .bar.top{top:0;animation:barIn .9s cubic-bezier(.16,.84,.24,1) both}
-.cine .bar.bot{bottom:0;animation:barInBot .9s cubic-bezier(.16,.84,.24,1) both}
-.hero .hero-grid{position:relative;z-index:2}
-.hero .hero-grid>div:first-child{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
-.hero .robot-wrap{transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.cine .bar{position:absolute;left:0;right:0;height:1px;background:var(--ok);opacity:.25;z-index:1}
+.cine .bar.top{top:42px;animation:scanline 7s ease-in-out infinite}
+.cine .bar.bot{bottom:42px;opacity:.12}
 .close>*:not(.cine):not(.footer){position:relative;z-index:2}
-.close .eyebrow{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
-.close h2{transition:transform .3s cubic-bezier(.2,.8,.2,1)}
-.close.active h2{font-size:58px;text-shadow:0 0 60px rgba(56,189,248,.25)}
-@keyframes auroraDrift{0%{transform:translate3d(-3%,-2%,0) scale(1)}100%{transform:translate3d(3%,2%,0) scale(1.12)}}
+.close.active h2{text-shadow:0 0 50px rgba(92,242,160,.18)}
+@keyframes auroraDrift{0%{transform:translate3d(-2%,-1%,0)}100%{transform:translate3d(2%,1%,0)}}
 @keyframes grainShift{0%{transform:translate(0,0)}33%{transform:translate(-4%,3%)}66%{transform:translate(3%,-2%)}100%{transform:translate(0,0)}}
-@keyframes barIn{0%{transform:scaleY(2.4)}100%{transform:scaleY(1)}}
-@keyframes barInBot{0%{transform:scaleY(-2.4)}100%{transform:scaleY(-1)}}
-@media (prefers-reduced-motion:reduce){.cine .aurora,.cine .grain{animation:none}}
+@keyframes scanline{0%,100%{transform:translateY(0);opacity:.05}50%{transform:translateY(560px);opacity:.3}}
+@media (prefers-reduced-motion:reduce){.cine .aurora,.cine .grain,.cine .bar,.sig-move,.con-led,.led.warn{animation:none}}
 
-/* YCloud dashboard mock */
-.ycloud{background:#f7f5fc;font-size:11px;color:#1e1b2e;padding:14px;display:flex;flex-direction:column;gap:12px}
+/* YCloud dashboard mock (faithful product replica — kept light on purpose) */
+.ycloud{background:#f7f5fc;font-family:var(--font-body);font-size:11px;color:#1e1b2e;padding:14px;display:flex;flex-direction:column;gap:12px}
 .yc-hero{background:linear-gradient(135deg,#efe9fd,#f6f1ff);border:1px solid #e6def7;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:11px}
 .yc-welcome{font-size:15px;font-weight:500;color:#241f38}
 .yc-welcome b{font-weight:800}
@@ -286,6 +295,22 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
 .yc-n{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;background:#ede9f5;color:#a59fc0;flex:0 0 auto}
 .yc-n.on{background:#7c3aed;color:#fff}
 .yc-do{border:1px solid #d9d2ec;color:#5b5470;font-weight:700;font-size:10.5px;padding:6px 16px;border-radius:8px;white-space:nowrap}
+/* YCloud · suscripción / uso y límites */
+.ycsub{gap:13px}
+.yc-h1{font-size:17px;font-weight:800;color:#1f1b2e}
+.yc-sub{font-size:10.5px;color:#8b86a0;margin-top:-7px}
+.yc-panel{background:#fff;border:1px solid #ece6f7;border-radius:12px;padding:14px}
+.yc-ph{font-size:13px;font-weight:800;color:#241f38;margin-bottom:12px}
+.yc-plan3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;align-items:center}
+.yc-k{font-size:9.5px;color:#8b86a0;margin-bottom:6px}
+.yc-v{font-size:12px;font-weight:700;color:#241f38}
+.yc-upd{font-size:9.5px;color:#8b86a0;margin-bottom:13px}
+.yc-meter{margin-bottom:12px}
+.yc-meter:last-child{margin-bottom:0}
+.yc-ml{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;color:#3b3550;margin-bottom:6px}
+.yc-ml b{font-weight:700;color:#241f38;font-size:11px}
+.yc-bar{height:7px;border-radius:99px;background:#ede9f5;overflow:hidden}
+.yc-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#7c3aed,#a855f7)}
 </style>
 </head>
 <body>
@@ -298,18 +323,20 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
       <div class="cine"><div class="aurora"></div><div class="grain"></div><div class="vignette"></div><div class="bar top"></div><div class="bar bot"></div></div>
       <div class="hero-grid">
         <div>
-          <span class="eyebrow r">● Productos desarrollados · 2026</span>
+          <span class="eyebrow r">Productos desarrollados · 2026</span>
           <h1 class="r d1">Lo que ya<br><span class="hl">construimos</span></h1>
           <p class="lead r d2">Un ecosistema propio de inteligencia artificial, dashboards y aplicaciones web operando para Santa Rosa Paraguay. Productos reales, en producción, generando leads y datos en tiempo real.</p>
           <div class="hero-meta">
             <div class="chip r d3"><span class="k num" data-count="13">0</span><span class="l">Proyectos<br>actuales</span></div>
           </div>
         </div>
-        <div class="robot-wrap r d3">
-          <div class="robot-glow"></div>
-          <div class="ring r1"><div class="dot"></div></div>
-          <div class="ring r2"><div class="dot"></div></div>
-          <spline-viewer class="robot-spline" url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
+        <div class="hero-viz r d3">
+          <div class="robot-wrap">
+            <div class="robot-glow"></div>
+            <div class="ring r1"><div class="dot"></div></div>
+            <div class="ring r2"><div class="dot"></div></div>
+            <spline-viewer class="robot-spline" url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
+          </div>
         </div>
       </div>
       <div class="footer">
@@ -328,9 +355,9 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
       </div>
       <div class="kpis" style="margin-bottom:22px">
         <div class="kpi r d1"><div class="v"><span class="num" data-count="6">0</span></div><div class="lab">Productos entregados / listos</div></div>
-        <div class="kpi cy r d2"><div class="v"><span class="num" data-count="6">0</span></div><div class="lab">Sitios web por marca en línea</div></div>
+        <div class="kpi r d2"><div class="v"><span class="num" data-count="6">0</span></div><div class="lab">Sitios web por marca en línea</div></div>
         <div class="kpi am r d3"><div class="v"><span class="num" data-count="2">0</span></div><div class="lab">En desarrollo activo</div></div>
-        <div class="kpi vi r d4"><div class="v"><span class="num" data-count="11" data-suffix="+">0</span></div><div class="lab">Marcas integradas en una plataforma</div></div>
+        <div class="kpi r d4"><div class="v"><span class="num" data-count="11" data-suffix="+">0</span></div><div class="lab">Marcas integradas en una plataforma</div></div>
       </div>
       <div class="ptiles r d3" id="ptiles"></div>
       <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Resumen de productos</div><div class="pageno"><b>02</b> / 11</div></div>
@@ -340,13 +367,13 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
     <section class="slide" data-name="BOT · Dashboard">
       <div class="shead">
         <div>
-          <span class="eyebrow r">Producto · Agente IA <span class="badge b-done" style="margin-left:8px">● En producción</span></span>
+          <span class="eyebrow r">Producto · Agente IA <span class="badge b-done" style="margin-left:10px">● En producción</span></span>
           <h2 class="title r d1">BOT Agéntico <span class="hl">+ Dashboard CRM</span></h2>
         </div>
       </div>
       <div class="prod-grid">
         <div>
-          <p class="subtitle r d1">App propia que atiende WhatsApp 24/7, <b style="color:#fff">califica cada conversación con IA</b> y la convierte en lead. Todo se opera desde un <b style="color:#fff">dashboard con CRM propio</b>: bandeja en vivo, embudo y control del bot por marca.</p>
+          <p class="subtitle r d1">App propia que atiende WhatsApp 24/7, <b>califica cada conversación con IA</b> y la convierte en lead. Todo se opera desde un <b>dashboard con CRM propio</b>: bandeja en vivo, embudo y control del bot por marca.</p>
           <div class="feat">
             <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Bandeja unificada en vivo</b> <span>— conversaciones abiertas, asignación al bot o a un asesor.</span></div></div>
             <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Embudo integrado</b> <span>— Nuevo, Contactado, Calificado y Descartado en una sola vista.</span></div></div>
@@ -354,60 +381,60 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
             <div class="it r d5"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Control total del bot</b> <span>— encender/apagar, etiquetas, encuestas, flows y respuestas rápidas.</span></div></div>
           </div>
           <div class="statline">
-            <div class="s r d5"><div class="v" style="color:#38BDF8">24/7</div><div class="l">Atención automática</div></div>
-            <div class="s r d6"><div class="v" style="color:#8B5CF6">RAG</div><div class="l">Conocimiento por marca</div></div>
+            <div class="s r d5"><div class="v">24/7</div><div class="l">Atención automática</div></div>
+            <div class="s r d6"><div class="v">RAG</div><div class="l">Conocimiento por marca</div></div>
           </div>
         </div>
         <div class="shots two r d3">
-          <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">dashboard · bandeja + CRM</span></div><img src="assets/bot-inbox.png" alt="Dashboard del BOT con CRM — bandeja de conversaciones en vivo"></div>
-          <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">configuración · Master Prompt Renew</span></div><img src="assets/bot-config.png" alt="Configuración del BOT — Master Prompt e identidad por marca"></div>
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><span class="u">dashboard · bandeja + CRM</span></div><img src="assets/bot-inbox.png" alt="Dashboard del BOT con CRM — bandeja de conversaciones en vivo"></div>
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><span class="u">configuración · Master Prompt Renew</span></div><img src="assets/bot-config.png" alt="Configuración del BOT — Master Prompt e identidad por marca"></div>
         </div>
       </div>
-      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> BOT Agéntico · Dashboard CRM</div><div class="pageno"><b>03</b> / 11</div></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> BOT · Dashboard CRM</div><div class="pageno"><b>03</b> / 11</div></div>
     </section>
 
     <!-- ===== SLIDE 4 · BOT · INTEGRACIÓN BITRIX24 (DEVELOPERS) ===== -->
     <section class="slide" data-name="BOT · Bitrix">
       <div class="shead">
         <div>
-          <span class="eyebrow cy r">Producto · Integración <span class="badge b-done" style="margin-left:8px">● En producción</span></span>
+          <span class="eyebrow cy r">Producto · Integración <span class="badge b-done" style="margin-left:10px">● En producción</span></span>
           <h2 class="title r d1">Integrado a <span class="hl">Bitrix24</span> como developers</h2>
         </div>
       </div>
       <div class="prod-grid rev">
         <div class="shots two r d3">
-          <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">bitrix24 · contact center</span></div><img src="assets/bot-integraciones.png" alt="Bitrix24 Contact Center — canales integrados, WhatsApp BOT SRPY"></div>
-          <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">integración · webhook + round-robin</span></div><img src="assets/bot-bitrix.png" alt="Integración Bitrix24 — webhook REST inbound y pool de asesores round-robin"></div>
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><span class="u">bitrix24 · contact center</span></div><img src="assets/bot-integraciones.png" alt="Bitrix24 Contact Center — canales integrados, WhatsApp BOT SRPY"></div>
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><span class="u">integración · webhook + round-robin</span></div><img src="assets/bot-bitrix.png" alt="Integración Bitrix24 — webhook REST inbound y pool de asesores round-robin"></div>
         </div>
         <div>
-          <p class="subtitle r d1">El bot se conecta a Bitrix24 a nivel <b style="color:#fff">developer</b>: WhatsApp (BOT SRPY) como canal del Contact Center y un <b style="color:#fff">webhook REST inbound</b> que crea el lead sólo cuando la IA detecta intención real de compra.</p>
+          <p class="subtitle r d1">El bot se conecta a Bitrix24 a nivel <b>developer</b>: WhatsApp (BOT SRPY) como canal del Contact Center y un <b>webhook REST inbound</b> que crea el lead sólo cuando la IA detecta intención real de compra.</p>
           <div class="feat">
-            <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Webhook REST inbound</b> <span>— <code style="color:#38BDF8">crm.lead.add</code> con scope CRM, sin tocar el front de Bitrix.</span></div></div>
+            <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Webhook REST inbound</b> <span>— <code>crm.lead.add</code> con scope CRM, sin tocar el front de Bitrix.</span></div></div>
             <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Reparto round-robin</b> <span>— pool de asesores atómico server-side, sin duplicar ni colisionar leads.</span></div></div>
             <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Solo leads calificados</b> <span>— descarta saludos y consultas sin intención antes de crear el prospecto.</span></div></div>
             <div class="it r d5"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Multicanal nativo</b> <span>— WhatsApp, Instagram, Facebook y Messenger sobre el mismo Contact Center.</span></div></div>
           </div>
           <div class="statline">
-            <div class="s r d4"><div class="v" style="color:#22C55E">REST</div><div class="l">Webhook inbound</div></div>
-            <div class="s r d5"><div class="v" style="color:#38BDF8">Round-robin</div><div class="l">Reparto de leads</div></div>
-            <div class="s r d6"><div class="v" style="color:#8B5CF6">IA</div><div class="l">Filtro de intención</div></div>
+            <div class="s r d4"><div class="v">REST</div><div class="l">Webhook inbound</div></div>
+            <div class="s r d5"><div class="v">Round-robin</div><div class="l">Reparto de leads</div></div>
+            <div class="s r d6"><div class="v">IA</div><div class="l">Filtro de intención</div></div>
           </div>
         </div>
       </div>
-      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> BOT · Integración Bitrix24</div><div class="pageno"><b>04</b> / 11</div></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Integración Bitrix24</div><div class="pageno"><b>04</b> / 11</div></div>
     </section>
 
     <!-- ===== SLIDE · NPS WHATSAPP SIN COSTO ===== -->
     <section class="slide" data-name="NPS WhatsApp">
       <div class="shead">
         <div>
-          <span class="eyebrow vi r">Producto · Integración <span class="badge b-done" style="margin-left:8px">● En producción</span></span>
+          <span class="eyebrow vi r">Producto · Integración <span class="badge b-done" style="margin-left:10px">● En producción</span></span>
           <h2 class="title r d1">NPS por WhatsApp <span class="hl">sin costo</span></h2>
         </div>
       </div>
       <div class="prod-grid">
         <div>
-          <p class="subtitle r d1">Integramos una <b style="color:#fff">API de mensajería sin costo</b> para enviar encuestas <b style="color:#fff">NPS por WhatsApp</b>, <b style="color:#fff">reduciendo significativamente</b> el gasto en medición de satisfacción del cliente.</p>
+          <p class="subtitle r d1">Integramos una <b>API de mensajería sin costo</b> para enviar encuestas <b>NPS por WhatsApp</b>, <b>reduciendo significativamente</b> el gasto en medición de satisfacción del cliente.</p>
           <div class="feat">
             <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>NPS automatizado por WhatsApp</b> <span>— encuesta de satisfacción tras la venta o la entrega.</span></div></div>
             <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>API sin costo</b> <span>— capa gratuita que reemplaza herramientas pagas.</span></div></div>
@@ -415,197 +442,200 @@ h2.title{font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1.05;m
             <div class="it r d5"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Resultados al CRM</b> <span>— respuestas y puntaje NPS centralizados con el resto de los datos.</span></div></div>
           </div>
           <div class="statline">
-            <div class="s r d4"><div class="v" style="color:#22C55E">Gs 0</div><div class="l">Costo de API</div></div>
-            <div class="s r d5"><div class="v" style="color:#38BDF8">NPS</div><div class="l">Encuesta automatizada</div></div>
-            <div class="s r d6"><div class="v" style="color:#8B5CF6">WhatsApp</div><div class="l">Canal directo al cliente</div></div>
+            <div class="s r d4"><div class="v">Gs 0</div><div class="l">Costo de API</div></div>
+            <div class="s r d5"><div class="v">NPS</div><div class="l">Encuesta automatizada</div></div>
+            <div class="s r d6"><div class="v">WhatsApp</div><div class="l">Canal directo al cliente</div></div>
           </div>
         </div>
-        <div class="browser r d3"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">app.ycloud.com · NPS WhatsApp</span></div>
-          <div class="ycloud">
-            <div class="yc-hero">
-              <div class="yc-welcome">👋 ¡Bienvenido, <b>Carlos Roman!</b></div>
-              <div class="yc-card">
-                <div class="yc-co"><span class="yc-logo">SR</span><div><div class="yc-co-name">Santa Rosa</div><div class="yc-co-id">ID empresa · 69dfb2e0…60de5e</div></div></div>
-                <div class="yc-wallet"><div><div class="yc-w-lab">Cartera</div><div class="yc-w-val">0.5 USD</div></div><span class="yc-btn">Recargar</span></div>
+        <div class="browser r d3"><div class="bar"><i></i><i></i><i></i><span class="u">app.ycloud.com · suscripción</span></div>
+          <div class="ycloud ycsub">
+            <div class="yc-h1">Suscripción</div>
+            <div class="yc-sub">Administrar suscripción de la empresa</div>
+            <div class="yc-panel">
+              <div class="yc-ph">Plan actual</div>
+              <div class="yc-plan3">
+                <div><div class="yc-k">Planificación</div><span class="yc-free">Free</span></div>
+                <div><div class="yc-k">Válido hasta</div><div class="yc-v">Para siempre</div></div>
+                <div><div class="yc-k">Administrar</div><span class="yc-btn">Mejorar</span></div>
               </div>
-              <div class="yc-plan"><span>Planificación: <b class="yc-free">Free</b></span><span class="yc-btn">Mejorar</span></div>
             </div>
-            <div class="yc-guide">
-              <div class="yc-g-head"><span class="yc-g-ic">📣</span> Campaña de marketing · WhatsApp</div>
-              <div class="yc-step"><span class="yc-n on">1</span><div><b>Crear plantilla de WhatsApp</b><span>Diseña y envía tu plantilla para aprobación de Meta</span></div><span class="yc-do">Crear</span></div>
-              <div class="yc-step"><span class="yc-n">2</span><div><b>Crear transmisión NPS</b><span>Selecciona clientes y envía la encuesta de satisfacción</span></div><span class="yc-do">Crear</span></div>
-              <div class="yc-step"><span class="yc-n">3</span><div><b>Ver estadísticas</b><span>Analiza respuestas y puntaje NPS de los clientes</span></div><span class="yc-do">Vista</span></div>
+            <div class="yc-panel">
+              <div class="yc-ph">Uso y límites</div>
+              <div class="yc-upd">Próxima actualización: 2026-07-01</div>
+              <div class="yc-meter"><div class="yc-ml"><span>Cuentas de usuario</span><b>1 / 1</b></div><div class="yc-bar"><i style="width:100%"></i></div></div>
+              <div class="yc-meter"><div class="yc-ml"><span>Canales</span><b>2 / 2</b></div><div class="yc-bar"><i style="width:100%"></i></div></div>
+              <div class="yc-meter"><div class="yc-ml"><span>Créditos de IA generativa</span><b>10.207 / 500.000</b></div><div class="yc-bar"><i style="width:3%"></i></div></div>
             </div>
           </div>
         </div>
       </div>
-      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> NPS por WhatsApp · sin costo</div><div class="pageno"><b>05</b> / 12</div></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> NPS por WhatsApp</div><div class="pageno"><b>05</b> / 12</div></div>
     </section>
 
-    <!-- ===== SLIDE 4 · DASHBOARD META ADS ===== -->
+    <!-- ===== SLIDE · DASHBOARD META ADS ===== -->
     <section class="slide" data-name="Meta Ads">
       <div class="shead">
         <div>
-          <span class="eyebrow cy r">Producto · Dashboard <span class="badge b-done" style="margin-left:8px">● En producción</span></span>
+          <span class="eyebrow cy r">Producto · Dashboard <span class="badge b-done" style="margin-left:10px">● En producción</span></span>
           <h2 class="title r d1">Dashboard <span class="hl">Meta Ads</span> en tiempo real</h2>
         </div>
       </div>
       <div class="prod-grid rev">
-        <div class="browser r d2"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">santarosa · dashboard meta ads</span></div><img src="assets/metaads.png" alt="Dashboard Meta Ads en tiempo real"></div>
+        <div class="browser r d2"><div class="bar"><i></i><i></i><i></i><span class="u">santarosa · dashboard meta ads</span></div><img src="assets/metaads.png" alt="Dashboard Meta Ads en tiempo real"></div>
         <div>
-          <p class="subtitle r d1">Plataforma centralizada que monitorea la pauta de <b style="color:#fff">Meta Ads</b> con los parámetros que pidieron <b style="color:#fff">Marketing y Comercial</b>, conectada en vivo y cruzada con las ventas reales del CRM.</p>
+          <p class="subtitle r d1">Plataforma centralizada que monitorea la pauta de <b>Meta Ads</b> con los parámetros que pidieron <b>Marketing y Comercial</b>, conectada en vivo y cruzada con las ventas reales del CRM.</p>
           <div class="feat">
             <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Leads, alcance, CPL, frecuencia y conversiones</b> <span>en un solo lugar.</span></div></div>
             <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>11+ marcas</b> <span>integradas en una sola plataforma.</span></div></div>
             <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Alertas automáticas</b> <span>y cruce con ventas reales del CRM.</span></div></div>
           </div>
           <div class="statline">
-            <div class="s r d4"><div class="v num" style="color:#38BDF8" data-count="11" data-suffix="+">0</div><div class="l">Marcas integradas</div></div>
-            <div class="s r d5"><div class="v num" style="color:#22C55E" data-count="100" data-suffix="%">0</div><div class="l">Tiempo real</div></div>
-            <div class="s r d6"><div class="v" style="color:#F59E0B">24/7</div><div class="l">Conectado a Meta</div></div>
+            <div class="s r d4"><div class="v num" data-count="11" data-suffix="+">0</div><div class="l">Marcas integradas</div></div>
+            <div class="s r d5"><div class="v num" data-count="100" data-suffix="%">0</div><div class="l">Tiempo real</div></div>
+            <div class="s r d6"><div class="v">24/7</div><div class="l">Conectado a Meta</div></div>
           </div>
         </div>
       </div>
-      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Dashboard Meta Ads</div><div class="pageno"><b>05</b> / 11</div></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Dashboard Meta Ads</div><div class="pageno"><b>06</b> / 11</div></div>
     </section>
 
-    <!-- ===== SLIDE 5 · DASHBOARD CRM BITRIX ===== -->
+    <!-- ===== SLIDE · DASHBOARD CRM BITRIX ===== -->
     <section class="slide" data-name="CRM Leads">
       <div class="shead">
         <div>
-          <span class="eyebrow r">Producto · Dashboard <span class="badge b-done" style="margin-left:8px">● En producción</span></span>
+          <span class="eyebrow r">Producto · Dashboard <span class="badge b-done" style="margin-left:10px">● En producción</span></span>
           <h2 class="title r d1">Dashboard CRM <span class="hl">Bitrix · Leads</span></h2>
         </div>
       </div>
       <div class="prod-grid">
         <div>
-          <p class="subtitle r d1">Vista ejecutiva sobre los datos reales de <b style="color:#fff">Bitrix24</b>: comparativa de períodos, prospectos, conversión y <b style="color:#fff">forecast de fin de mes</b>, con drill-down por marca, departamento y asesor.</p>
+          <p class="subtitle r d1">Vista ejecutiva sobre los datos reales de <b>Bitrix24</b>: comparativa de períodos, prospectos, conversión y <b>velocidad de cierre</b>, con drill-down por marca, departamento y asesor.</p>
           <div class="feat">
             <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Prospectos, negociaciones y ventas concretadas</b> <span>en vivo.</span></div></div>
-            <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Forecast de cierre</b> <span>— pipeline × tasa de cierre + ventas del mes.</span></div></div>
+            <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Comparativa de períodos</b> <span>— P1 vs P2, hoy / semana / mes / trimestre / año.</span></div></div>
             <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Salud de marca, calidad de lead, embudo y orígenes</b> <span>por asesor.</span></div></div>
           </div>
           <div class="statline">
-            <div class="s r d4"><div class="v num" style="color:#38BDF8" data-count="3364">0</div><div class="l">Prospectos del período</div></div>
-            <div class="s r d5"><div class="v" style="color:#22C55E">Gs 221M</div><div class="l">Forecast fin de mes</div></div>
-            <div class="s r d6"><div class="v num" style="color:#8B5CF6" data-count="11" data-suffix="+">0</div><div class="l">Marcas en drill-down</div></div>
+            <div class="s r d4"><div class="v num" data-count="3364">0</div><div class="l">Prospectos del período</div></div>
+            <div class="s r d5"><div class="v num" data-count="23">0</div><div class="l">Negociaciones activas</div></div>
+            <div class="s r d6"><div class="v num" data-count="11" data-suffix="+">0</div><div class="l">Marcas en drill-down</div></div>
           </div>
         </div>
-        <div class="browser r d2"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">dashboard crm · bitrix24</span></div><img src="assets/bitrix-crm.png" alt="Dashboard CRM Bitrix — Comparativa de Periodos"></div>
+        <div class="browser r d2"><div class="bar"><i></i><i></i><i></i><span class="u">dashboard crm · bitrix24</span></div><img src="assets/bitrix-crm.png" alt="Dashboard CRM Bitrix — Comparativa de Periodos"></div>
       </div>
-      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Dashboard CRM Bitrix</div><div class="pageno"><b>06</b> / 11</div></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Dashboard CRM Bitrix</div><div class="pageno"><b>07</b> / 11</div></div>
     </section>
 
-    <!-- ===== SLIDE 6 · PDI PREENTREGA ===== -->
+    <!-- ===== SLIDE · PDI PREENTREGA ===== -->
     <section class="slide" data-name="PDI Preentrega">
       <div class="shead">
         <div>
-          <span class="eyebrow cy r">Producto · Operación <span class="badge b-done" style="margin-left:8px">● En producción</span></span>
+          <span class="eyebrow cy r">Producto · Operación <span class="badge b-done" style="margin-left:10px">● En producción</span></span>
           <h2 class="title r d1">PDI · Seguimiento de <span class="hl">Preentrega</span></h2>
         </div>
       </div>
       <div class="prod-grid rev">
-        <div class="browser r d2"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">pdi · seguimiento de preentrega</span></div><img src="assets/pdi-preentrega.png" alt="PDI Seguimiento de Preentrega"></div>
+        <div class="browser r d2"><div class="bar"><i></i><i></i><i></i><span class="u">pdi · seguimiento de preentrega</span></div><img src="assets/pdi-preentrega.png" alt="PDI Seguimiento de Preentrega"></div>
         <div>
-          <p class="subtitle r d1">App de operación que ordena la <b style="color:#fff">cola de pedidos por fecha de entrega</b>, para que la entrega más próxima se procese primero. Pensada con Post Venta para el flujo real de stock y despacho.</p>
+          <p class="subtitle r d1">App de operación que ordena la <b>cola de pedidos por fecha de entrega</b>, para que la entrega más próxima se procese primero. Pensada con Post Venta para el flujo real de stock y despacho.</p>
           <div class="feat">
             <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Estados claros</b> <span>— en cola, pendientes, finalizados, por chofer.</span></div></div>
             <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Carga ágil</b> <span>— importar desde Excel, imagen o factura.</span></div></div>
             <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Reportes y usuarios</b> <span>— trazabilidad de cada vehículo hasta la entrega.</span></div></div>
           </div>
           <div class="statline">
-            <div class="s r d4"><div class="v" style="color:#22C55E">Por fecha</div><div class="l">Orden de entrega</div></div>
-            <div class="s r d5"><div class="v" style="color:#38BDF8">Excel/IMG</div><div class="l">Importación flexible</div></div>
-            <div class="s r d6"><div class="v" style="color:#F59E0B">100%</div><div class="l">Trazabilidad</div></div>
+            <div class="s r d4"><div class="v">Por fecha</div><div class="l">Orden de entrega</div></div>
+            <div class="s r d5"><div class="v">Excel/IMG</div><div class="l">Importación flexible</div></div>
+            <div class="s r d6"><div class="v">100%</div><div class="l">Trazabilidad</div></div>
           </div>
         </div>
       </div>
-      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> PDI Preentrega</div><div class="pageno"><b>07</b> / 11</div></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> PDI Preentrega</div><div class="pageno"><b>08</b> / 11</div></div>
     </section>
 
-    <!-- ===== SLIDE 7 · APP SUBASTAS ===== -->
+    <!-- ===== SLIDE · APP SUBASTAS ===== -->
     <section class="slide" data-name="App Subastas">
       <div class="shead">
         <div>
-          <span class="eyebrow cy r">Producto · App Web <span class="badge b-done" style="margin-left:8px">● En producción</span></span>
+          <span class="eyebrow cy r">Producto · App Web <span class="badge b-done" style="margin-left:10px">● En producción</span></span>
           <h2 class="title r d1">App de <span class="hl">Subastas</span> · Renew</h2>
         </div>
       </div>
       <div class="prod-grid">
         <div>
-          <p class="subtitle r d1">Aplicación web de <b style="color:#fff">subastas de vehículos en tiempo real</b> para Renew. En producción: catálogo verificado, puja en vivo y notificaciones al instante.</p>
+          <p class="subtitle r d1">Aplicación web de <b>subastas de vehículos en tiempo real</b> para Renew. En producción: catálogo verificado, puja en vivo y notificaciones al instante.</p>
           <div class="feat">
             <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Subastas en vivo</b> <span>con anti-sniping de 60 segundos.</span></div></div>
             <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Catálogo seleccionado</b> <span>— vehículos verificados por Santa Rosa Paraguay.</span></div></div>
             <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Puja + notificaciones</b> <span>al instante cuando alguien supera tu oferta.</span></div></div>
           </div>
           <div class="statline">
-            <div class="s r d4"><div class="v num" style="color:#22C55E" data-count="19">0</div><div class="l">Subastas cargadas</div></div>
-            <div class="s r d5"><div class="v" style="color:#38BDF8">60s</div><div class="l">Anti-sniping</div></div>
-            <div class="s r d6"><div class="v" style="color:#8B5CF6">Live</div><div class="l">Puja en tiempo real</div></div>
+            <div class="s r d4"><div class="v num" data-count="19">0</div><div class="l">Subastas cargadas</div></div>
+            <div class="s r d5"><div class="v">60s</div><div class="l">Anti-sniping</div></div>
+            <div class="s r d6"><div class="v">Live</div><div class="l">Puja en tiempo real</div></div>
           </div>
         </div>
-        <div class="shots two r d3">
-          <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">renewsubastas.com.py · catálogo</span></div><img src="assets/subastas-catalogo.png" alt="Catálogo de subastas Renew"></div>
-          <div class="stack">
-            <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">detalle · puja en vivo</span></div><img src="assets/subastas-detalle.png" alt="Detalle de subasta con puja en vivo"></div>
-            <div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">login Renew</span></div><img src="assets/subastas-renew.png" alt="Login de Renew Subastas"></div>
+        <div class="shots subastas r d3">
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><span class="u">renewsubastas.com.py · catálogo</span></div><img src="assets/subastas-catalogo.png" alt="Catálogo de subastas Renew"></div>
+          <div class="row2">
+            <div class="browser"><div class="bar"><i></i><i></i><i></i><span class="u">detalle · puja en vivo</span></div><img src="assets/subastas-detalle.png" alt="Detalle de subasta con puja en vivo"></div>
+            <div class="browser"><div class="bar"><i></i><i></i><i></i><span class="u">login · Renew</span></div><img src="assets/subastas-renew.png" alt="Login de Renew Subastas"></div>
           </div>
         </div>
       </div>
-      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> App de Subastas Renew</div><div class="pageno"><b>08</b> / 11</div></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> App de Subastas Renew</div><div class="pageno"><b>09</b> / 11</div></div>
     </section>
 
-    <!-- ===== SLIDE 8 · PLATAFORMA PAUTAS IA ===== -->
+    <!-- ===== SLIDE · PLATAFORMA PAUTAS IA ===== -->
     <section class="slide" data-name="Pautas IA">
       <div class="shead">
         <div>
-          <span class="eyebrow am r">Producto · Plataforma <span class="badge b-prog" style="margin-left:8px">● En desarrollo</span></span>
+          <span class="eyebrow am r">Producto · Plataforma <span class="badge b-prog" style="margin-left:10px">● En desarrollo</span></span>
           <h2 class="title r d1">Plataforma Integral de <span class="hl">Pautas con IA</span></h2>
         </div>
       </div>
       <div class="prod-grid rev">
-        <div class="browser r d2"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">plataforma de pautas · IA</span></div><img src="assets/pautas-ia.png" alt="Plataforma Integral de Pautas con IA"></div>
+        <div class="browser r d2"><div class="bar"><i></i><i></i><i></i><span class="u">plataforma de pautas · IA</span></div><img src="assets/pautas-ia.png" alt="Plataforma Integral de Pautas con IA"></div>
         <div>
-          <p class="subtitle r d1">Una sola interfaz para <b style="color:#fff">crear y gestionar campañas en Meta, Google Ads y TikTok Ads</b>, con audiencias, optimización y reportes asistidos por IA. En desarrollo.</p>
+          <p class="subtitle r d1">Una sola interfaz para <b>crear y gestionar campañas en Meta, Google Ads y TikTok Ads</b>, con audiencias, optimización y reportes asistidos por IA. En desarrollo.</p>
           <div class="feat">
             <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Meta · Google Ads · TikTok Ads</b> <span>desde un mismo panel.</span></div></div>
             <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Audiencias y optimización con IA</b> <span>— menos trabajo manual.</span></div></div>
             <div class="it r d4"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Reportes unificados</b> <span>— una vista para todo el equipo.</span></div></div>
           </div>
           <div class="statline">
-            <div class="s r d4"><div class="v" style="color:#22C55E">+32%</div><div class="l">Alcance proyectado</div></div>
-            <div class="s r d5"><div class="v" style="color:#38BDF8">+48%</div><div class="l">Eficiencia</div></div>
-            <div class="s r d6"><div class="v" style="color:#8B5CF6">+27%</div><div class="l">Conversión</div></div>
+            <div class="s r d4"><div class="v">+32%</div><div class="l">Alcance proyectado</div></div>
+            <div class="s r d5"><div class="v">+48%</div><div class="l">Eficiencia</div></div>
+            <div class="s r d6"><div class="v">+27%</div><div class="l">Conversión</div></div>
           </div>
         </div>
       </div>
-      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Plataforma de Pautas IA</div><div class="pageno"><b>09</b> / 11</div></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Plataforma de Pautas IA</div><div class="pageno"><b>10</b> / 11</div></div>
     </section>
 
-    <!-- ===== SLIDE 9 · SITIOS WEB + IMPORTACIONES ===== -->
+    <!-- ===== SLIDE · SITIOS WEB + IMPORTACIONES ===== -->
     <section class="slide" data-name="Sitios web">
       <div class="shead">
         <div>
-          <span class="eyebrow r">Producto · Sitios web por marca <span class="badge b-done" style="margin-left:8px">● En línea</span></span>
+          <span class="eyebrow r">Producto · Sitios web por marca <span class="badge b-done" style="margin-left:10px">● En línea</span></span>
           <h2 class="title r d1">Una web propia <span class="hl">por marca</span></h2>
           <p class="subtitle r d2">Sitios desarrollados y en línea para las marcas del grupo — diseño, performance y cotización en cada uno.</p>
         </div>
       </div>
       <div class="webgrid r d3" id="webtiles"></div>
-      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Sitios web &amp; Importaciones</div><div class="pageno"><b>10</b> / 11</div></div>
+      <div class="footer"><div class="fl"><span class="lg">Santa Rosa<span>·</span>IA</span> Sitios web por marca</div><div class="pageno"><b>11</b> / 11</div></div>
     </section>
 
-    <!-- ===== SLIDE 10 · CIERRE ===== -->
+    <!-- ===== SLIDE · CIERRE ===== -->
     <section class="slide close" data-name="Cierre">
       <div class="cine"><div class="aurora"></div><div class="grain"></div><div class="vignette"></div><div class="bar top"></div><div class="bar bot"></div></div>
       <span class="eyebrow r">En síntesis</span>
       <h2 class="r d1">De herramientas sueltas a una <span class="hl">plataforma propia</span></h2>
       <p class="r d2">Un BOT que genera leads, dashboards de Meta Ads y CRM en tiempo real, PDI de preentrega, la app de Subastas en producción, sitios web por marca y dos plataformas en desarrollo — todo construido in-house para Santa Rosa.</p>
       <div class="next-steps">
-        <div class="ns r d3"><div class="n">● Ya operando</div><div class="t">BOT de leads, Meta Ads, CRM Bitrix, PDI y sitios web por marca.</div></div>
-        <div class="ns r d4"><div class="n">● Ya operando</div><div class="t">App de Subastas Renew en producción con su dominio.</div></div>
-        <div class="ns r d5"><div class="n">● En desarrollo</div><div class="t">Plataforma de pautas con IA y dashboard de importaciones.</div></div>
+        <div class="ns r d3"><div class="n">Ya operando</div><div class="t">BOT de leads, Meta Ads, CRM Bitrix, PDI y sitios web por marca.</div></div>
+        <div class="ns r d4"><div class="n">Ya operando</div><div class="t">App de Subastas Renew en producción con su dominio.</div></div>
+        <div class="ns dev r d5"><div class="n">En desarrollo</div><div class="t">Plataforma de pautas con IA y dashboard de importaciones.</div></div>
       </div>
       <a class="cta-glow r d6" href="https://press-omar.vercel.app" target="_blank" rel="noopener">
         <span>Explorar la plataforma</span>
@@ -643,7 +673,7 @@ const IC={
 const PRODUCTS=[
  {ic:'bot',t:'BOT Agéntico de Ventas',d:'App en Bitrix: conecta, califica y genera leads por WhatsApp.',b:['b-done','En producción']},
  {ic:'chart',t:'Dashboard Meta Ads',d:'Pauta de Meta en tiempo real, cruzada con ventas del CRM.',b:['b-done','En producción']},
- {ic:'crm',t:'Dashboard CRM Bitrix',d:'Leads, conversión y forecast por marca y asesor.',b:['b-done','En producción']},
+ {ic:'crm',t:'Dashboard CRM Bitrix',d:'Leads, conversión y velocidad por marca y asesor.',b:['b-done','En producción']},
  {ic:'pdi',t:'PDI Preentrega',d:'Cola de pedidos ordenada por fecha de entrega.',b:['b-done','En producción']},
  {ic:'auction',t:'App de Subastas Renew',d:'Subastas de vehículos en vivo, en producción.',b:['b-done','En producción']},
  {ic:'web',t:'Sitios web por marca',d:'Santa Rosa, Leapmotor, Mitsubishi, Xpeng, Renew, JMEV.',b:['b-done','En línea']},
@@ -659,7 +689,7 @@ PRODUCTS.forEach(p=>{
   pt.appendChild(el);
 });
 
-/* ---------- WEB TILES (slide 9) ---------- */
+/* ---------- WEB TILES ---------- */
 const WEBS=[
  {n:'Santa Rosa Paraguay',u:'santarosa.com.py',img:'web-santarosa.png',b:['b-done','En línea']},
  {n:'Leapmotor',u:'leapmotor · srpy',img:'web-leapmotor.png',b:['b-done','En línea']},
@@ -671,7 +701,7 @@ const WEBS=[
 const wt=document.getElementById('webtiles');
 WEBS.forEach(w=>{
   const el=document.createElement('div');el.className='webcard';
-  el.innerHTML=`<div class="browser"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u">${w.u}</span></div><img src="assets/${w.img}" alt="Sitio web ${w.n}"></div>
+  el.innerHTML=`<div class="browser"><div class="bar"><i></i><i></i><i></i><span class="u">${w.u}</span></div><img src="assets/${w.img}" alt="Sitio web ${w.n}"></div>
     <div class="wmeta"><span class="wn">${w.n}</span><span class="badge ${w.b[0]}">${w.b[1]}</span></div>`;
   wt.appendChild(el);
 });
@@ -734,18 +764,18 @@ window.addEventListener('resize',fit);fit();
 activate(slides[0]);
 document.getElementById('prog').style.width=(1/slides.length*100)+'%';
 
-/* ---------- CINEMATIC PARALLAX (cover) ---------- */
+/* ---------- PARALLAX (cover) ---------- */
 (function(){
   const hero=document.querySelector('.slide.hero');if(!hero)return;
   const txt=hero.querySelector('.hero-grid>div:first-child');
-  const robot=hero.querySelector('.robot-wrap');
+  const viz=hero.querySelector('.hero-viz');
   const aur=hero.querySelector('.cine .aurora');
   if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   let tx=0,ty=0,cx=0,cy=0,raf=0;
   function loop(){cx+=(tx-cx)*.08;cy+=(ty-cy)*.08;
-    if(txt)txt.style.transform=`translate3d(${cx*-10}px,${cy*-8}px,0)`;
-    if(robot)robot.style.transform=`translate3d(${cx*22}px,${cy*16}px,0)`;
-    if(aur)aur.style.translate=`${cx*-18}px ${cy*-14}px`;
+    if(txt)txt.style.transform=`translate3d(${cx*-9}px,${cy*-7}px,0)`;
+    if(viz)viz.style.transform=`translate3d(${cx*12}px,${cy*9}px,0)`;
+    if(aur)aur.style.translate=`${cx*-16}px ${cy*-12}px`;
     if(Math.abs(tx-cx)>.001||Math.abs(ty-cy)>.001)raf=requestAnimationFrame(loop);else raf=0;}
   window.addEventListener('pointermove',e=>{
     if(!hero.classList.contains('active'))return;
@@ -754,16 +784,16 @@ document.getElementById('prog').style.width=(1/slides.length*100)+'%';
   });
 })();
 
-/* ---------- CINEMATIC PARALLAX (close) ---------- */
+/* ---------- PARALLAX (close) ---------- */
 (function(){
   const sl=document.querySelector('.slide.close');if(!sl)return;
   const h2=sl.querySelector('h2'),eb=sl.querySelector('.eyebrow'),aur=sl.querySelector('.cine .aurora');
   if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   let tx=0,ty=0,cx=0,cy=0,raf=0;
   function loop(){cx+=(tx-cx)*.08;cy+=(ty-cy)*.08;
-    if(h2)h2.style.transform=`translate3d(${cx*8}px,${cy*6}px,0)`;
-    if(eb)eb.style.transform=`translate3d(${cx*-6}px,${cy*-5}px,0)`;
-    if(aur)aur.style.translate=`${cx*-18}px ${cy*-14}px`;
+    if(h2)h2.style.transform=`translate3d(${cx*7}px,${cy*5}px,0)`;
+    if(eb)eb.style.transform=`translate3d(${cx*-5}px,${cy*-4}px,0)`;
+    if(aur)aur.style.translate=`${cx*-16}px ${cy*-12}px`;
     if(Math.abs(tx-cx)>.001||Math.abs(ty-cy)>.001)raf=requestAnimationFrame(loop);else raf=0;}
   window.addEventListener('pointermove',e=>{
     if(!sl.classList.contains('active'))return;
