@@ -368,7 +368,7 @@ h2.title{font-family:var(--font-display);font-size:37px;font-weight:800;letter-s
       <div class="shead">
         <div>
           <span class="eyebrow r">Producto · Agente IA <span class="badge b-done" style="margin-left:10px">● En producción</span></span>
-          <h2 class="title r d1">BOT Agéntico <span class="hl">+ Dashboard CRM</span></h2>
+          <h2 class="title r d1">BOT Agéntico <span class="hl">con CRM propio</span></h2>
         </div>
       </div>
       <div class="prod-grid">
@@ -398,7 +398,7 @@ h2.title{font-family:var(--font-display);font-size:37px;font-weight:800;letter-s
       <div class="shead">
         <div>
           <span class="eyebrow cy r">Producto · Integración <span class="badge b-done" style="margin-left:10px">● En producción</span></span>
-          <h2 class="title r d1">Integrado a <span class="hl">Bitrix24</span> como developers</h2>
+          <h2 class="title r d1">Conexión <span class="hl">propia</span> con Bitrix24</h2>
         </div>
       </div>
       <div class="prod-grid rev">
@@ -407,7 +407,7 @@ h2.title{font-family:var(--font-display);font-size:37px;font-weight:800;letter-s
           <div class="browser"><div class="bar"><i></i><i></i><i></i><span class="u">integración · webhook + round-robin</span></div><img src="assets/bot-bitrix.png" alt="Integración Bitrix24 — webhook REST inbound y pool de asesores round-robin"></div>
         </div>
         <div>
-          <p class="subtitle r d1">El bot se conecta a Bitrix24 a nivel <b>developer</b>: WhatsApp (BOT SRPY) como canal del Contact Center y un <b>webhook REST inbound</b> que crea el lead sólo cuando la IA detecta intención real de compra.</p>
+          <p class="subtitle r d1">Integración <b>construida 100% in-house</b> por nuestro equipo, sin proveedor externo: conectamos el BOT a Bitrix24 a nivel <b>developer</b>, con un <b>webhook REST inbound</b> que crea el lead sólo cuando la IA detecta intención real de compra.</p>
           <div class="feat">
             <div class="it r d2"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Webhook REST inbound</b> <span>— <code>crm.lead.add</code> con scope CRM, sin tocar el front de Bitrix.</span></div></div>
             <div class="it r d3"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><div><b>Reparto round-robin</b> <span>— pool de asesores atómico server-side, sin duplicar ni colisionar leads.</span></div></div>
@@ -671,14 +671,13 @@ const IC={
 
 /* ---------- PRODUCT TILES (overview) ---------- */
 const PRODUCTS=[
- {ic:'bot',t:'BOT Agéntico de Ventas',d:'App en Bitrix: conecta, califica y genera leads por WhatsApp.',b:['b-done','En producción']},
- {ic:'chart',t:'Dashboard Meta Ads',d:'Pauta de Meta en tiempo real, cruzada con ventas del CRM.',b:['b-done','En producción']},
- {ic:'crm',t:'Dashboard CRM Bitrix',d:'Leads, conversión y velocidad por marca y asesor.',b:['b-done','En producción']},
+ {ic:'bot',t:'BOT Agéntico de Ventas',d:'App en Bitrix que atiende y califica por WhatsApp los leads generados.',b:['b-done','En producción']},
+ {ic:'chart',t:'Dashboard Meta Ads',d:'Pauta de Meta Ads monitoreada en tiempo real.',b:['b-done','En producción']},
  {ic:'pdi',t:'PDI Preentrega',d:'Cola de pedidos ordenada por fecha de entrega.',b:['b-done','En producción']},
- {ic:'auction',t:'App de Subastas Renew',d:'Subastas de vehículos en vivo, en producción.',b:['b-done','En producción']},
+ {ic:'auction',t:'App de Subastas Renew',d:'Subastas de vehículos en vivo.',b:['b-done','En producción']},
  {ic:'web',t:'Sitios web por marca',d:'Santa Rosa, Leapmotor, Mitsubishi, Xpeng, Renew, JMEV.',b:['b-done','En línea']},
  {ic:'ads',t:'Plataforma de Pautas IA',d:'Meta + Google + TikTok Ads en una sola interfaz.',b:['b-prog','En desarrollo']},
- {ic:'import',t:'Dashboard Importaciones',d:'Seguimiento de importaciones del grupo.',b:['b-prog','En desarrollo']},
+ {ic:'import',t:'Dashboard Importaciones',d:'Seguimiento de importaciones de Santa Rosa.',b:['b-prog','En desarrollo']},
 ];
 const pt=document.getElementById('ptiles');
 PRODUCTS.forEach(p=>{
